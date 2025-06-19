@@ -2,9 +2,7 @@ local musicIDs = {
     ["1"] = 89907278904871,
     ["2"] = 99409598156364,
     ["3"] = 133900561957103,
-    ["4"] = 119731837417100,
-    ["5"] = 93768636184697,
-    ["6"] = 103876297369702
+    ["4"] = 93768636184697,
 }
 
 local player = game:GetService("Players").LocalPlayer
@@ -14,6 +12,7 @@ gui.Name = "FreemanMusicUI"
 gui.ResetOnSpawn = false
 gui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
 
+local musicListBtnClicked = false
 local isClientAudio = false
 local isLoop = false
 local currentVolume = 1
@@ -46,8 +45,8 @@ local function playClientAudio(id)
 end
 
 local frame = Instance.new("Frame", gui)
-frame.Size = UDim2.new(0, 310, 0, 420)
-frame.Position = UDim2.new(1, -320, 0.5, -210)
+frame.Size = UDim2.new(0, 380, 0, 420)
+frame.Position = UDim2.new(1, -390, 0.5, -210)
 frame.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
 frame.BorderSizePixel = 0
 frame.Active = true
@@ -137,6 +136,39 @@ local function rainbowColor(offset)
     return Color3.fromHSV(hue % 1, 1, 1)
 end
 
+local musicListBtn = Instance.new("TextButton", header)
+musicListBtn.Size = UDim2.new(0, 70, 0, 30)
+musicListBtn.Position = UDim2.new(0, 10, 1, 335)
+musicListBtn.Text = "Music List"
+musicListBtn.Font = Enum.Font.GothamBold
+musicListBtn.TextSize = 14
+musicListBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
+musicListBtn.BackgroundColor3 = Color3.fromRGB(60, 70, 150)
+musicListBtn.BorderSizePixel = 0
+Instance.new("UICorner", musicListBtn).CornerRadius = UDim.new(0, 12)
+
+local musicListFrame = Instance.new("Frame", frame)
+musicListFrame.Position = UDim2.new(0, 0, 0, 35)
+musicListFrame.Size = UDim2.new(1, 0, 1, -130)
+musicListFrame.BackgroundTransparency = 1
+musicListFrame.Visible = false
+
+local musicListLabel = Instance.new("TextLabel", musicListFrame)
+musicListLabel.Size = UDim2.new(1, -20, 1, -20)
+musicListLabel.Position = UDim2.new(0, 10, 0, 10)
+musicListLabel.Text = [[
+89907278904871 - Funk da Praia, added by Freeman [1]
+133900561957103 - Trash Funk, added by Freeman [3]
+99409598156364 - Retrolam Funk, added by Freeman [2]
+93768636184697 - 2609 (Jersey Club), added by Freeman [4]
+]]
+musicListLabel.Font = Enum.Font.Gotham
+musicListLabel.TextColor3 = Color3.new(1,1,1)
+musicListLabel.TextSize = 16
+musicListLabel.TextWrapped = true
+musicListLabel.TextYAlignment = Enum.TextYAlignment.Top
+musicListLabel.BackgroundTransparency = 1
+
 local buttons = {}
 
 for name, id in pairs(musicIDs) do
@@ -165,6 +197,19 @@ for name, id in pairs(musicIDs) do
 
     table.insert(buttons, btn)
 end
+
+musicListBtn.MouseButton1Click:Connect(function()
+        musicListBtnClicked = not musicListBtnClicked
+        if musicListBtnClicked then
+            mainFrame.Visible = false
+            musicListFrame.Visible = true
+            creditsFrame.Visible = false
+            creditsButtonClicked = false
+        else
+            mainFrame.Visible = true
+            musicListFrame.Visible = false
+        end
+    end)
 
 local inputBox = Instance.new("TextBox", frame)
 inputBox.PlaceholderText = "Audio ID here..."
@@ -294,6 +339,7 @@ runService.RenderStepped:Connect(function()
     end
     creditsButton.BackgroundColor3 = rainbowColor(0.3)
     modeButton.BackgroundColor3 = rainbowColor(0.6)
+    musicListBtn.BackgroundColor3 = rainbowColor(0.5)
 end)
 
 minimize.MouseButton1Click:Connect(function()
