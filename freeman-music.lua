@@ -51,7 +51,7 @@ end
 local frame = Instance.new("Frame", gui)
 frame.Size = UDim2.new(0, 380, 0, 420)
 frame.Position = UDim2.new(1, -390, 0.5, -210)
-frame.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+frame.BackgroundColor3 = Color3.fromRGB(220, 220, 220)
 frame.BorderSizePixel = 0
 frame.Active = true
 frame.Draggable = true
@@ -59,7 +59,7 @@ Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 12)
 
 local header = Instance.new("Frame", frame)
 header.Size = UDim2.new(1, 0, 0, 35)
-header.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+header.BackgroundColor3 = Color3.fromRGB(245, 245, 245)
 header.BorderSizePixel = 0
 Instance.new("UICorner", header).CornerRadius = UDim.new(0, 12)
 
@@ -68,7 +68,7 @@ title.Size = UDim2.new(1, -140, 1, 0)
 title.Position = UDim2.new(0, 10, 0, 0)
 title.BackgroundTransparency = 1
 title.Text = "FREEMAN HUB - Music 2.0.1"
-title.TextColor3 = Color3.fromRGB(255, 255, 255)
+title.TextColor3 = Color3.fromRGB(0, 0, 0)
 title.Font = Enum.Font.FredokaOne
 title.TextSize = 18
 title.TextXAlignment = Enum.TextXAlignment.Left
@@ -76,9 +76,10 @@ title.TextXAlignment = Enum.TextXAlignment.Left
 local settingsButton = Instance.new("TextButton", header)
 settingsButton.Size = UDim2.new(0, 35, 1, 0)
 settingsButton.Position = UDim2.new(1, -105, 0, 0)
-settingsButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+settingsButton.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
 settingsButton.BorderSizePixel = 0
 settingsButton.Text = "⚙️"
+settingsButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 Instance.new("UICorner", settingsButton).CornerRadius = UDim.new(0, 12)
 
 local minimize = Instance.new("TextButton", header)
@@ -87,8 +88,8 @@ minimize.Position = UDim2.new(1, -70, 0, 0)
 minimize.Text = "-"
 minimize.Font = Enum.Font.GothamBold
 minimize.TextSize = 18
-minimize.TextColor3 = Color3.fromRGB(255, 255, 255)
-minimize.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+minimize.TextColor3 = Color3.fromRGB(0, 0, 0)
+minimize.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
 minimize.BorderSizePixel = 0
 Instance.new("UICorner", minimize).CornerRadius = UDim.new(0, 12)
 
@@ -98,20 +99,20 @@ close.Position = UDim2.new(1, -35, 0, 0)
 close.Text = "X"
 close.Font = Enum.Font.GothamBold
 close.TextSize = 18
-close.TextColor3 = Color3.fromRGB(255, 255, 255)
-close.BackgroundColor3 = Color3.fromRGB(60, 50, 50)
+close.TextColor3 = Color3.fromRGB(0, 0, 0)
+close.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
 close.BorderSizePixel = 0
 Instance.new("UICorner", close).CornerRadius = UDim.new(0, 12)
 
 local openIcon = Instance.new("TextButton", gui)
 openIcon.Size = UDim2.new(0, 40, 0, 40)
 openIcon.Position = UDim2.new(1, -50, 1, -50)
-openIcon.BackgroundColor3 = Color3.fromRGB(40, 40, 60)
+openIcon.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
 openIcon.Text = "+"
 openIcon.Visible = false
 openIcon.TextSize = 24
 openIcon.Font = Enum.Font.GothamBold
-openIcon.TextColor3 = Color3.fromRGB(255, 255, 255)
+openIcon.TextColor3 = Color3.fromRGB(0, 0, 0)
 Instance.new("UICorner", openIcon).CornerRadius = UDim.new(1, 0)
 
 local mainFrame = Instance.new("Frame", frame)
@@ -137,15 +138,15 @@ creditsLabel.Size = UDim2.new(1, -20, 1, -20)
 creditsLabel.Position = UDim2.new(0, 10, 0, 10)
 creditsLabel.Text = "CREDITS\nMade by Freeman4i37.\nA simple gui of some songs chosen by the owner himself.\nIf you want me to add buttons with your songs, tell me on my discord (go to scriptblox).\nYou can put yours in the audio box down there and play!"
 creditsLabel.Font = Enum.Font.Gotham
-creditsLabel.TextColor3 = Color3.new(1,1,1)
+creditsLabel.TextColor3 = Color3.fromRGB(0,0,0)
 creditsLabel.TextSize = 14
 creditsLabel.TextWrapped = true
 creditsLabel.TextYAlignment = Enum.TextYAlignment.Top
 creditsLabel.BackgroundTransparency = 1
 
-local function rainbowColor(offset)
-    local hue = tick() * 0.2 + offset
-    return Color3.fromHSV(hue % 1, 1, 1)
+local function rainbowColor()
+    local hue = tick() * 0.5
+    return Color3.fromHSV(hue % 1, 0.6, 1)
 end
 
 local musicListBtn = Instance.new("TextButton", header)
@@ -154,8 +155,8 @@ musicListBtn.Position = UDim2.new(0, 10, 1, 335)
 musicListBtn.Text = "Music List"
 musicListBtn.Font = Enum.Font.GothamBold
 musicListBtn.TextSize = 14
-musicListBtn.TextColor3 = Color3.fromRGB(255, 255, 255)
-musicListBtn.BackgroundColor3 = Color3.fromRGB(60, 70, 150)
+musicListBtn.TextColor3 = Color3.fromRGB(0, 0, 0)
+musicListBtn.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
 musicListBtn.BorderSizePixel = 0
 Instance.new("UICorner", musicListBtn).CornerRadius = UDim.new(0, 12)
 
@@ -175,7 +176,7 @@ musicListLabel.Text = [[
 [4] - 2609 (Jersey Club), added by Freeman
 ]]
 musicListLabel.Font = Enum.Font.Gotham
-musicListLabel.TextColor3 = Color3.new(1,1,1)
+musicListLabel.TextColor3 = Color3.fromRGB(0,0,0)
 musicListLabel.TextSize = 10
 musicListLabel.TextWrapped = true
 musicListLabel.TextYAlignment = Enum.TextYAlignment.Top
@@ -193,8 +194,8 @@ muteBoomboxButton.Position = UDim2.new(0.1, 0, 0, 30)
 muteBoomboxButton.Text = "Mute All Boomboxes"
 muteBoomboxButton.Font = Enum.Font.GothamBold
 muteBoomboxButton.TextSize = 16
-muteBoomboxButton.BackgroundColor3 = Color3.fromRGB(120, 80, 80)
-muteBoomboxButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+muteBoomboxButton.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+muteBoomboxButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 Instance.new("UICorner", muteBoomboxButton).CornerRadius = UDim.new(0, 10)
 
 local muteGameSoundsButton = Instance.new("TextButton", settingsFrame)
@@ -203,8 +204,8 @@ muteGameSoundsButton.Position = UDim2.new(0.1, 0, 0, 90)
 muteGameSoundsButton.Text = "Mute All GameSounds"
 muteGameSoundsButton.Font = Enum.Font.GothamBold
 muteGameSoundsButton.TextSize = 16
-muteGameSoundsButton.BackgroundColor3 = Color3.fromRGB(80, 120, 80)
-muteGameSoundsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+muteGameSoundsButton.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+muteGameSoundsButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 Instance.new("UICorner", muteGameSoundsButton).CornerRadius = UDim.new(0, 10)
 
 local buttons = {}
@@ -215,8 +216,8 @@ for name, id in pairs(musicIDs) do
     btn.Text = name
     btn.Font = Enum.Font.GothamBold
     btn.TextScaled = true
-    btn.TextColor3 = Color3.fromRGB(255, 255, 255)
-    btn.BackgroundColor3 = Color3.fromRGB(60, 70, 150)
+    btn.TextColor3 = Color3.fromRGB(0, 0, 0)
+    btn.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
     Instance.new("UIStroke", btn).Transparency = 0.2
     Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 10)
     btn.Parent = mainFrame
@@ -258,8 +259,9 @@ local inputBox = Instance.new("TextBox", frame)
 inputBox.PlaceholderText = "Audio ID here..."
 inputBox.Size = UDim2.new(0.7, -10, 0, 35)
 inputBox.Position = UDim2.new(0, 10, 1, -85)
-inputBox.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
-inputBox.TextColor3 = Color3.fromRGB(255, 255, 255)
+inputBox.BackgroundColor3 = Color3.fromRGB(245, 245, 160)
+inputBox.TextColor3 = Color3.fromRGB(0, 0, 0)
+inputBox.PlaceholderColor3 = Color3.fromRGB(60, 60, 60)
 inputBox.Font = Enum.Font.Gotham
 inputBox.TextSize = 16
 inputBox.Text = ""
@@ -270,8 +272,8 @@ local playButton = Instance.new("TextButton", frame)
 playButton.Text = "PLAY"
 playButton.Size = UDim2.new(0.3, -10, 0, 35)
 playButton.Position = UDim2.new(0.7, 0, 1, -85)
-playButton.BackgroundColor3 = Color3.fromRGB(70, 80, 160)
-playButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+playButton.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+playButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 playButton.Font = Enum.Font.GothamBold
 playButton.TextSize = 20
 Instance.new("UICorner", playButton).CornerRadius = UDim.new(0, 10)
@@ -302,8 +304,8 @@ local creditsButton = Instance.new("TextButton", frame)
 creditsButton.Text = "Credits"
 creditsButton.Size = UDim2.new(0, 70, 0, 30)
 creditsButton.Position = UDim2.new(0, 10, 1, -125)
-creditsButton.BackgroundColor3 = Color3.fromRGB(60, 70, 150)
-creditsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+creditsButton.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+creditsButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 creditsButton.Font = Enum.Font.GothamBold
 creditsButton.TextSize = 14
 Instance.new("UICorner", creditsButton).CornerRadius = UDim.new(0, 10)
@@ -312,8 +314,8 @@ local modeButton = Instance.new("TextButton", frame)
 modeButton.Text = "[Real Audio]"
 modeButton.Size = UDim2.new(0, 130, 0, 30)
 modeButton.Position = UDim2.new(0, 90, 1, -125)
-modeButton.BackgroundColor3 = Color3.fromRGB(60, 70, 150)
-modeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+modeButton.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+modeButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 modeButton.Font = Enum.Font.GothamBold
 modeButton.TextSize = 14
 Instance.new("UICorner", modeButton).CornerRadius = UDim.new(0, 10)
@@ -322,8 +324,8 @@ local loopButton = Instance.new("TextButton", frame)
 loopButton.Text = "Loop: NO"
 loopButton.Size = UDim2.new(0, 90, 0, 25)
 loopButton.Position = UDim2.new(0, 10, 1, -160)
-loopButton.BackgroundColor3 = Color3.fromRGB(80, 80, 120)
-loopButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+loopButton.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+loopButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 loopButton.Font = Enum.Font.GothamBold
 loopButton.TextSize = 12
 Instance.new("UICorner", loopButton).CornerRadius = UDim.new(0, 10)
@@ -333,8 +335,8 @@ local stopButton = Instance.new("TextButton", frame)
 stopButton.Text = "[Stop Music]"
 stopButton.Size = UDim2.new(0, 100, 0, 25)
 stopButton.Position = UDim2.new(0, 110, 1, -160)
-stopButton.BackgroundColor3 = Color3.fromRGB(120, 60, 60)
-stopButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+stopButton.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+stopButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 stopButton.Font = Enum.Font.GothamBold
 stopButton.TextSize = 12
 Instance.new("UICorner", stopButton).CornerRadius = UDim.new(0, 10)
@@ -344,8 +346,8 @@ local volumeButton = Instance.new("TextButton", frame)
 volumeButton.Text = "Volume: 1"
 volumeButton.Size = UDim2.new(0, 90, 0, 25)
 volumeButton.Position = UDim2.new(0, 220, 1, -160)
-volumeButton.BackgroundColor3 = Color3.fromRGB(60, 80, 60)
-volumeButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+volumeButton.BackgroundColor3 = Color3.fromRGB(200, 200, 200)
+volumeButton.TextColor3 = Color3.fromRGB(0, 0, 0)
 volumeButton.Font = Enum.Font.GothamBold
 volumeButton.TextSize = 12
 Instance.new("UICorner", volumeButton).CornerRadius = UDim.new(0, 10)
@@ -470,15 +472,17 @@ muteGameSoundsButton.MouseButton1Click:Connect(function()
 end)
 
 runService.RenderStepped:Connect(function()
-    for i, btn in ipairs(buttons) do
-        btn.BackgroundColor3 = rainbowColor(i * 0.8)
-    end
-    creditsButton.BackgroundColor3 = rainbowColor(0.8)
-    modeButton.BackgroundColor3 = rainbowColor(0.8)
-    musicListBtn.BackgroundColor3 = rainbowColor(0.8)
-    settingsButton.BackgroundColor3 = rainbowColor(0.8)
-    minimize.BackgroundColor3 = rainbowColor(0.8)
-    close.BackgroundColor3 = rainbowColor(0.8)
+    local rainbow = rainbowColor()
+    for _, btn in ipairs(buttons) do btn.BackgroundColor3 = rainbow end
+    creditsButton.BackgroundColor3 = rainbow
+    modeButton.BackgroundColor3 = rainbow
+    musicListBtn.BackgroundColor3 = rainbow
+    settingsButton.BackgroundColor3 = rainbow
+    minimize.BackgroundColor3 = rainbow
+    close.BackgroundColor3 = rainbow
+    openIcon.BackgroundColor3 = rainbow
+    muteBoomboxButton.BackgroundColor3 = rainbow
+    muteGameSoundsButton.BackgroundColor3 = rainbow
 end)
 
 minimize.MouseButton1Click:Connect(function()
