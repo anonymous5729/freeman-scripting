@@ -164,7 +164,7 @@ musicListLabel.Text = [[
 ]]
 musicListLabel.Font = Enum.Font.Gotham
 musicListLabel.TextColor3 = Color3.new(1,1,1)
-musicListLabel.TextSize = 16
+musicListLabel.TextSize = 8
 musicListLabel.TextWrapped = true
 musicListLabel.TextYAlignment = Enum.TextYAlignment.Top
 musicListLabel.BackgroundTransparency = 1
