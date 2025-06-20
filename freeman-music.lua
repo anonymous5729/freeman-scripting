@@ -231,7 +231,6 @@ for name, id in pairs(musicIDs) do
                 local ok, err = pcall(function()
                     player.Character.Radio.Remote:FireServer(unpack(args))
                 end)
-                if not ok then warn("Failed to play the song:", err) end
             else
                 warn("Radio ou Remote não encontrados!")
             end
@@ -290,7 +289,6 @@ playButton.MouseButton1Click:Connect(function()
                 local ok, err = pcall(function()
                     player.Character.Radio.Remote:FireServer(unpack(args))
                 end)
-                if not ok then warn("Error playing manual audio:", err) end
             else
                 warn("Radio ou Remote não encontrados!")
             end
@@ -495,6 +493,55 @@ openIcon.MouseButton1Click:Connect(function()
     openIcon.Visible = false
 end)
 
+-- TAGS LOCAIS
+local ownerId = 693662558
+local freemanTagBillboard
+
+local function addFreemanTag(char, text, color)
+    if char:FindFirstChild("FreemanTag") then
+        char.FreemanTag:Destroy()
+    end
+    local adornee = char:FindFirstChild("Head") or char:FindFirstChildWhichIsA("BasePart")
+    if not adornee then return end
+    local billboard = Instance.new("BillboardGui")
+    billboard.Name = "FreemanTag"
+    billboard.Adornee = adornee
+    billboard.Size = UDim2.new(0, 200, 0, 30)
+    billboard.StudsOffset = Vector3.new(0, 2.8, 0)
+    billboard.AlwaysOnTop = true
+    local label = Instance.new("TextLabel")
+    label.Parent = billboard
+    label.Size = UDim2.new(1, 0, 1, 0)
+    label.BackgroundTransparency = 1
+    label.Text = text
+    label.TextColor3 = color
+    label.Font = Enum.Font.GothamBold
+    label.TextStrokeTransparency = 0.4
+    label.TextSize = 18
+    billboard.Parent = char
+    freemanTagBillboard = billboard
+end
+
+local function isOwner()
+    return player.UserId == ownerId
+end
+
+local function applyFreemanTag(char)
+    if isOwner() then
+        addFreemanTag(char, "[Freeman's Hub Owner]", Color3.fromRGB(255, 0, 0))
+    else
+        addFreemanTag(char, "[Freeman's User]", Color3.fromRGB(0, 255, 0))
+    end
+end
+
+if player.Character then
+    applyFreemanTag(player.Character)
+end
+player.CharacterAdded:Connect(function(char)
+    char:WaitForChild("Head", 5)
+    applyFreemanTag(char)
+end)
+
 close.MouseButton1Click:Connect(function()
     gui:Destroy()
     if soundFolder then
@@ -503,5 +550,8 @@ close.MouseButton1Click:Connect(function()
     if muteGameSoundsConn then
         muteGameSoundsConn:Disconnect()
         muteGameSoundsConn = nil
+    end
+    if freemanTagBillboard and freemanTagBillboard.Parent then
+        freemanTagBillboard:Destroy()
     end
 end)
