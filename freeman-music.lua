@@ -176,7 +176,7 @@ musicListLabel.Text = [[
 ]]
 musicListLabel.Font = Enum.Font.Gotham
 musicListLabel.TextColor3 = Color3.new(1,1,1)
-musicListLabel.TextSize = 8
+musicListLabel.TextSize = 10
 musicListLabel.TextWrapped = true
 musicListLabel.TextYAlignment = Enum.TextYAlignment.Top
 musicListLabel.BackgroundTransparency = 1
@@ -471,12 +471,14 @@ end)
 
 runService.RenderStepped:Connect(function()
     for i, btn in ipairs(buttons) do
-        btn.BackgroundColor3 = rainbowColor(i * 0.1)
+        btn.BackgroundColor3 = rainbowColor(i * 0.8)
     end
-    creditsButton.BackgroundColor3 = rainbowColor(0.3)
-    modeButton.BackgroundColor3 = rainbowColor(0.6)
-    musicListBtn.BackgroundColor3 = rainbowColor(0.5)
+    creditsButton.BackgroundColor3 = rainbowColor(0.8)
+    modeButton.BackgroundColor3 = rainbowColor(0.8)
+    musicListBtn.BackgroundColor3 = rainbowColor(0.8)
     settingsButton.BackgroundColor3 = rainbowColor(0.8)
+    minimize.BackgroundColor3 = rainbowColor(0.8)
+    close.BackgroundColor3 = rainbowColor(0.8)
 end)
 
 minimize.MouseButton1Click:Connect(function()
