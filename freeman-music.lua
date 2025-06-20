@@ -17,8 +17,12 @@ local isClientAudio = false
 local isLoop = false
 local currentVolume = 1
 
-local soundFolder = workspace:FindFirstChild("FreemanClientSounds") or Instance.new("Folder", workspace)
-soundFolder.Name = "FreemanClientSounds"
+local soundFolder = workspace:FindFirstChild("FreemanClientSounds")
+if not soundFolder then
+    soundFolder = Instance.new("Folder")
+    soundFolder.Name = "FreemanClientSounds"
+    soundFolder.Parent = workspace
+end
 
 local function stopAllClientSounds()
     for _, s in ipairs(soundFolder:GetChildren()) do
@@ -60,7 +64,7 @@ header.BorderSizePixel = 0
 Instance.new("UICorner", header).CornerRadius = UDim.new(0, 12)
 
 local title = Instance.new("TextLabel", header)
-title.Size = UDim2.new(1, -105, 1, 0)
+title.Size = UDim2.new(1, -140, 1, 0)
 title.Position = UDim2.new(0, 10, 0, 0)
 title.BackgroundTransparency = 1
 title.Text = "FREEMAN HUB - Music"
@@ -68,6 +72,14 @@ title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.Font = Enum.Font.FredokaOne
 title.TextSize = 18
 title.TextXAlignment = Enum.TextXAlignment.Left
+
+local settingsButton = Instance.new("TextButton", header)
+settingsButton.Size = UDim2.new(0, 35, 1, 0)
+settingsButton.Position = UDim2.new(1, -105, 0, 0)
+settingsButton.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+settingsButton.BorderSizePixel = 0
+settingsButton.Text = "⚙️"
+Instance.new("UICorner", settingsButton).CornerRadius = UDim.new(0, 12)
 
 local minimize = Instance.new("TextButton", header)
 minimize.Size = UDim2.new(0, 35, 1, 0)
@@ -169,6 +181,32 @@ musicListLabel.TextWrapped = true
 musicListLabel.TextYAlignment = Enum.TextYAlignment.Top
 musicListLabel.BackgroundTransparency = 1
 
+local settingsFrame = Instance.new("Frame", frame)
+settingsFrame.Position = UDim2.new(0, 0, 0, 35)
+settingsFrame.Size = UDim2.new(1, 0, 1, -130)
+settingsFrame.BackgroundTransparency = 1
+settingsFrame.Visible = false
+
+local muteBoomboxButton = Instance.new("TextButton", settingsFrame)
+muteBoomboxButton.Size = UDim2.new(0.8, 0, 0, 40)
+muteBoomboxButton.Position = UDim2.new(0.1, 0, 0, 30)
+muteBoomboxButton.Text = "Mute All Boomboxes"
+muteBoomboxButton.Font = Enum.Font.GothamBold
+muteBoomboxButton.TextSize = 16
+muteBoomboxButton.BackgroundColor3 = Color3.fromRGB(120, 80, 80)
+muteBoomboxButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+Instance.new("UICorner", muteBoomboxButton).CornerRadius = UDim.new(0, 10)
+
+local muteGameSoundsButton = Instance.new("TextButton", settingsFrame)
+muteGameSoundsButton.Size = UDim2.new(0.8, 0, 0, 40)
+muteGameSoundsButton.Position = UDim2.new(0.1, 0, 0, 90)
+muteGameSoundsButton.Text = "Mute All GameSounds"
+muteGameSoundsButton.Font = Enum.Font.GothamBold
+muteGameSoundsButton.TextSize = 16
+muteGameSoundsButton.BackgroundColor3 = Color3.fromRGB(80, 120, 80)
+muteGameSoundsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+Instance.new("UICorner", muteGameSoundsButton).CornerRadius = UDim.new(0, 10)
+
 local buttons = {}
 
 for name, id in pairs(musicIDs) do
@@ -187,11 +225,15 @@ for name, id in pairs(musicIDs) do
         if isClientAudio then
             playClientAudio(id)
         else
-            local args = { [1] = "PlaySong", [2] = id }
-            local ok, err = pcall(function()
-                player.Character.Radio.Remote:FireServer(unpack(args))
-            end)
-            if not ok then warn("Failed to play the song:", err) end
+            if player.Character and player.Character:FindFirstChild("Radio") and player.Character.Radio:FindFirstChild("Remote") then
+                local args = { [1] = "PlaySong", [2] = id }
+                local ok, err = pcall(function()
+                    player.Character.Radio.Remote:FireServer(unpack(args))
+                end)
+                if not ok then warn("Failed to play the song:", err) end
+            else
+                warn("Radio ou Remote não encontrados!")
+            end
         end
     end)
 
@@ -199,17 +241,18 @@ for name, id in pairs(musicIDs) do
 end
 
 musicListBtn.MouseButton1Click:Connect(function()
-        musicListBtnClicked = not musicListBtnClicked
-        if musicListBtnClicked then
-            mainFrame.Visible = false
-            musicListFrame.Visible = true
-            creditsFrame.Visible = false
-            creditsButtonClicked = false
-        else
-            mainFrame.Visible = true
-            musicListFrame.Visible = false
-        end
-    end)
+    musicListBtnClicked = not musicListBtnClicked
+    if musicListBtnClicked then
+        mainFrame.Visible = false
+        musicListFrame.Visible = true
+        creditsFrame.Visible = false
+        settingsFrame.Visible = false
+        creditsButtonClicked = false
+    else
+        mainFrame.Visible = true
+        musicListFrame.Visible = false
+    end
+end)
 
 local inputBox = Instance.new("TextBox", frame)
 inputBox.PlaceholderText = "Audio ID here..."
@@ -234,16 +277,21 @@ playButton.TextSize = 20
 Instance.new("UICorner", playButton).CornerRadius = UDim.new(0, 10)
 
 playButton.MouseButton1Click:Connect(function()
-    local id = tonumber(inputBox.Text)
+    local input = inputBox.Text:gsub("rbxassetid://", "")
+    local id = tonumber(input)
     if id then
         if isClientAudio then
             playClientAudio(id)
         else
-            local args = { [1] = "PlaySong", [2] = id }
-            local ok, err = pcall(function()
-                player.Character.Radio.Remote:FireServer(unpack(args))
-            end)
-            if not ok then warn("Error playing manual audio:", err) end
+            if player.Character and player.Character:FindFirstChild("Radio") and player.Character.Radio:FindFirstChild("Remote") then
+                local args = { [1] = "PlaySong", [2] = id }
+                local ok, err = pcall(function()
+                    player.Character.Radio.Remote:FireServer(unpack(args))
+                end)
+                if not ok then warn("Error playing manual audio:", err) end
+            else
+                warn("Radio ou Remote não encontrados!")
+            end
         end
     else
         warn("INVALID ID")
@@ -316,6 +364,11 @@ volumeButton.MouseButton1Click:Connect(function()
     currentVolume = currentVolume + 0.5
     if currentVolume > 2 then currentVolume = 0 end
     volumeButton.Text = "Volume: " .. tostring(currentVolume)
+    for _, s in ipairs(soundFolder:GetChildren()) do
+        if s:IsA("Sound") then
+            s.Volume = currentVolume
+        end
+    end
 end)
 
 modeButton.MouseButton1Click:Connect(function()
@@ -331,6 +384,89 @@ creditsButton.MouseButton1Click:Connect(function()
     inCredits = not inCredits
     mainFrame.Visible = not inCredits
     creditsFrame.Visible = inCredits
+    musicListFrame.Visible = false
+    settingsFrame.Visible = false
+end)
+
+local inSettings = false
+settingsButton.MouseButton1Click:Connect(function()
+    inSettings = not inSettings
+    mainFrame.Visible = not inSettings
+    creditsFrame.Visible = false
+    musicListFrame.Visible = false
+    settingsFrame.Visible = inSettings
+    muteBoomboxButton.Text = boomboxMuted and "Unmute All Boomboxes" or "Mute All Boomboxes"
+    muteGameSoundsButton.Text = gameSoundsMuted and "Unmute All GameSounds" or "Mute All GameSounds"
+end)
+
+local boomboxMuted = false
+muteBoomboxButton.MouseButton1Click:Connect(function()
+    for _, plr in ipairs(game:GetService("Players"):GetPlayers()) do
+        if plr ~= player and plr.Character then
+            local radio = plr.Character:FindFirstChild("Radio")
+            if radio then
+                for _, s in ipairs(radio:GetDescendants()) do
+                    if s:IsA("Sound") then
+                        s.Volume = not boomboxMuted and 0 or 1
+                    end
+                end
+            end
+        end
+    end
+    boomboxMuted = not boomboxMuted
+    muteBoomboxButton.Text = boomboxMuted and "Unmute All Boomboxes" or "Mute All Boomboxes"
+end)
+
+local gameSoundsMuted = false
+local muteGameSoundsConn
+
+local function isMyBoombox(sound)
+    if sound:IsDescendantOf(soundFolder) then
+        return true
+    end
+    if player.Character then
+        local radio = player.Character:FindFirstChild("Radio")
+        if radio and sound:IsDescendantOf(radio) then
+            return true
+        end
+    end
+    return false
+end
+
+local function setGameSoundsMuted(mute)
+    if mute and not muteGameSoundsConn then
+        muteGameSoundsConn = runService.RenderStepped:Connect(function()
+            for _, s in ipairs(workspace:GetDescendants()) do
+                if s:IsA("Sound") and not isMyBoombox(s) then
+                    s.Volume = 0
+                end
+            end
+            for _, s in ipairs(game:GetService("SoundService"):GetDescendants()) do
+                if s:IsA("Sound") then
+                    s.Volume = 0
+                end
+            end
+        end)
+    elseif not mute and muteGameSoundsConn then
+        muteGameSoundsConn:Disconnect()
+        muteGameSoundsConn = nil
+        for _, s in ipairs(workspace:GetDescendants()) do
+            if s:IsA("Sound") and not isMyBoombox(s) then
+                s.Volume = 1
+            end
+        end
+        for _, s in ipairs(game:GetService("SoundService"):GetDescendants()) do
+            if s:IsA("Sound") then
+                s.Volume = 1
+            end
+        end
+    end
+    gameSoundsMuted = mute
+    muteGameSoundsButton.Text = mute and "Unmute All GameSounds" or "Mute All GameSounds"
+end
+
+muteGameSoundsButton.MouseButton1Click:Connect(function()
+    setGameSoundsMuted(not gameSoundsMuted)
 end)
 
 runService.RenderStepped:Connect(function()
@@ -340,6 +476,7 @@ runService.RenderStepped:Connect(function()
     creditsButton.BackgroundColor3 = rainbowColor(0.3)
     modeButton.BackgroundColor3 = rainbowColor(0.6)
     musicListBtn.BackgroundColor3 = rainbowColor(0.5)
+    settingsButton.BackgroundColor3 = rainbowColor(0.8)
 end)
 
 minimize.MouseButton1Click:Connect(function()
@@ -356,5 +493,9 @@ close.MouseButton1Click:Connect(function()
     gui:Destroy()
     if soundFolder then
         soundFolder:Destroy()
+    end
+    if muteGameSoundsConn then
+        muteGameSoundsConn:Disconnect()
+        muteGameSoundsConn = nil
     end
 end)
