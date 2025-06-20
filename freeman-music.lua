@@ -157,10 +157,10 @@ local musicListLabel = Instance.new("TextLabel", musicListFrame)
 musicListLabel.Size = UDim2.new(1, -20, 1, -20)
 musicListLabel.Position = UDim2.new(0, 10, 0, 10)
 musicListLabel.Text = [[
-89907278904871 - Funk da Praia, added by Freeman [1]
-133900561957103 - Trash Funk, added by Freeman [3]
-99409598156364 - Retrolam Funk, added by Freeman [2]
-93768636184697 - 2609 (Jersey Club), added by Freeman [4]
+[1] - Funk da Praia, added by Freeman
+[3] - Trash Funk, added by Freeman
+[2] - Retrolam Funk, added by Freeman
+[4] - 2609 (Jersey Club), added by Freeman
 ]]
 musicListLabel.Font = Enum.Font.Gotham
 musicListLabel.TextColor3 = Color3.new(1,1,1)
