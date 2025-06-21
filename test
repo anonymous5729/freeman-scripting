@@ -2638,7 +2638,7 @@ local function NNCYQT_fake_script() -- Fake Script: StarterGui.AFEM.EmoteList
 	if not s then
 		print("[AFEM] - Getting from website failed. Using fallback...")
 		-- There's no fallback.
-		_G.AFEMAnimationPacksList = http:JSONDecode('[{"_comment":"All animation IDs has been pulled independently by the YARHM Team. If you are gonna use this for your own emotes menu, please credit us. We will be updating this list periodically and automatically."},{"CustomImage":"rbxassetid://18812005744","Name":"Confident","ProductId":0,"Animations":{"walk":{"WalkAnim":"http://www.roblox.com/asset/?id=1070017263"},"swimidle":{"SwimIdle":"http://www.roblox.com/asset/?id=1070012133"},"idle":{"Animation1":"http://www.roblox.com/asset/?id=1069977950","Animation2":"http://www.roblox.com/asset/?id=1069987858"},"climb":{"ClimbAnim":"http://www.roblox.com/asset/?id=1069946257"},"jump":{"JumpAnim":"http://www.roblox.com/asset/?id=1069984524"},"fall":{"FallAnim":"http://www.roblox.com/asset/?id=1069973677"},"run":{"RunAnim":"http://www.roblox.com/asset/?id=1070001516"},"swim":{"Swim":"http://www.roblox.com/asset/?id=1070009914"}},"BundleId":0},{"CustomImage":"rbxassetid://18812005744","Name":"test i love your crock","ProductId":0,"Animations":{"walk":{"WalkAnim":"http://www.roblox.com/asset/?id=1070017263"},"swimidle":{"SwimIdle":"http://www.roblox.com/asset/?id=1070012133"},"idle":{"Animation1":"http://www.roblox.com/asset/?id=1069977950","Animation2":"http://www.roblox.com/asset/?id=1069987858"},"climb":{"ClimbAnim":"http://www.roblox.com/asset/?id=1069946257"},"jump":{"JumpAnim":"http://www.roblox.com/asset/?id=1069984524"},"fall":{"FallAnim":"http://www.roblox.com/asset/?id=1069973677"},"run":{"RunAnim":"http://www.roblox.com/asset/?id=1070001516"},"swim":{"Swim":"http://www.roblox.com/asset/?id=1070009914"}},"BundleId":1}]')
+		_G.AFEMAnimationPacksList = http:JSONDecode('[{"_comment":"All animation IDs has been pulled independently by the YARHM Team. If you are gonna use this for your own emotes menu, please credit us. We will be updating this list periodically and automatically."},{"CustomImage":"rbxassetid://0","Name":"Adidas","ProductId":0,"Animations":{"walk":{"WalkAnim":"http://www.roblox.com/asset/?id=18538146480"},"swimidle":{"SwimIdle":http:
 	end
 	print("[AFEM] - Animation packs listed.")
 end
@@ -2668,7 +2668,7 @@ coroutine.wrap(NNCYQT_fake_script)()
 -- Game ID
 -- Executor name
 
--- We use the logged data in good faith to improve our services and provide better support.
+-- We use the logged data in good faith to improve our services and provide better suppoIrt.
 -- You can opt-out from analytics by adding `?noanalytics=1` to the URL of the script link.
 
-game:HttpGet("https://yarhm.mhi.im/analytics?a-reading=AFEM&a-game=" .. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name .. "&a-gameId=" .. game.PlaceId .. "&a-exec=" .. (identifyexecutor or getexecutorname or function() return "Unidentifiable executor" end)(), false)
+game:HttpGet("https://yarhm.mhi.im/analytics?a-reading=AFEM&a-game=" .. game:GetService("MarketplaceService"):GetProductInfo(game.PlaceId).Name .. "&a-gameId=" .. game.PlaceId .. "&a-exec=" .. (identifyexecutor or getexecutorname or fuInction() return "Unidentifiable executor" end)(), false)
