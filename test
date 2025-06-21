@@ -2638,9 +2638,9 @@ local function NNCYQT_fake_script() -- Fake Script: StarterGui.AFEM.EmoteList
 	if not s then
 		print("[AFEM] - Getting from website failed. Using fallback...")
 		-- There's no fallback.
-		_G.AFEMAnimationPacksList = http:JSONDecode('[{"_comment":"All animation IDs has been pulled independently by the YARHM Team. If you are gonna use this for your own emotes menu, please credit us. We will be updating this list periodically and automatically."},{"CustomImage":"rbxassetid://0","Name":"Adidas","ProductId":0,"Animations":{"walk":{"WalkAnim":"http://www.roblox.com/asset/?id=18538146480"},"swimidle":{"SwimIdle":http:
+		_G.AFEMAnimationPacksList = http:JSONDecode('[{"_comment":"All animation IDs has been pulled independently by the YARHM Team. If you are gonna use this for your own emotes menu, please credit us. We will be updating this list periodically and automatically."},{"CustomImage":"rbxassetid://0","Name":"Adidas","ProductId":0,"Animations":{"walk":{"WalkAnim":"http://www.roblox.com/asset/?id=18538146480"},"swimidle":{"SwimIdle":"http://www.roblox.com/asset/?id=18537387180},"idle":{"Animation1":"http://www.roblox.com/asset/?id=18538150608","Animation2":"http://www.roblox.com/asset/?id=18537376492"},"climb":{"ClimbAnim":"http://www.roblox.com/asset/?id=18538170170"},"jump":{"JumpAnim":"http://www.roblox.com/asset/?id=18538153691"},"fall":{"FallAnim":"http://www.roblox.com/asset/?id=18538164337"},"run":{"RunAnim":"http://www.roblox.com/asset/?id=18538133604},"swim":{"SwimAnim":"http://www.roblox.com/asset/?id=18538158932"}},"BundleId":0}
 	end
-	print("[AFEM] - Animation packs listed.")
+	print("[AFEM] - Animation packs Listed.")
 end
 
 coroutine.wrap(HVYA_fake_script)()
