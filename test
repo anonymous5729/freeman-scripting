@@ -1,4 +1,4 @@
--- AFEM v2.1
+-- BANDU v1.6
 -- aku dah lupa tak ingat lagi
 
 if not game:IsLoaded() then
@@ -393,11 +393,11 @@ Converted["_UIGradient2"].Rotation = 180
 Converted["_UIGradient2"].Parent = Converted["_UIStroke3"]
 
 Converted["_HubCredits"].Font = Enum.Font.GothamBold
-Converted["_HubCredits"].Text = "made and open sourced by imperial"
-Converted["_HubCredits"].TextColor3 = Color3.fromRGB(255, 255, 255)
+Converted["_HubCredits"].Text = "made and open sourced by BANDU"
+Converted["_HubCredits"].TextColor3 = Color3.fromRGB(0, 0, 0)
 Converted["_HubCredits"].TextScaled = true
 Converted["_HubCredits"].TextSize = 14
-Converted["_HubCredits"].TextTransparency = 0.699999988079071
+Converted["_HubCredits"].TextTransparency = 1
 Converted["_HubCredits"].TextWrapped = true
 Converted["_HubCredits"].TextXAlignment = Enum.TextXAlignment.Right
 Converted["_HubCredits"].AnchorPoint = Vector2.new(0.5, 0.5)
@@ -411,7 +411,7 @@ Converted["_HubCredits"].Name = "HubCredits"
 Converted["_HubCredits"].Parent = Converted["_Menu"]
 
 Converted["_HubDesc"].Font = Enum.Font.GothamBold
-Converted["_HubDesc"].Text = "a free emotes menu"
+Converted["_HubDesc"].Text = "An Free Emotes Programming Menu"
 Converted["_HubDesc"].TextColor3 = Color3.fromRGB(255, 255, 255)
 Converted["_HubDesc"].TextSize = 14
 Converted["_HubDesc"].TextWrapped = true
@@ -427,7 +427,7 @@ Converted["_HubDesc"].Name = "HubDesc"
 Converted["_HubDesc"].Parent = Converted["_Menu"]
 
 Converted["_HubName"].Font = Enum.Font.GothamBold
-Converted["_HubName"].Text = "AFEM"
+Converted["_HubName"].Text = "BANDU HUB"
 Converted["_HubName"].TextColor3 = Color3.fromRGB(255, 255, 255)
 Converted["_HubName"].TextScaled = true
 Converted["_HubName"].TextSize = 14
@@ -2485,7 +2485,7 @@ local function DPDHH_fake_script() -- Fake Script: StarterGui.AFEM.Menu.Settings
 	script.Parent.MouseButton1Click:Connect(function()
 		script.Parent.Parent.Interactable = false
 		ts:Create(script.Parent.Parent.UIScale, TweenInfo.new(0.6, Enum.EasingStyle.Cubic, Enum.EasingDirection.Out), {
-			Scale = 0.9
+			Scale = 1
 		}):Play()
 		ts:Create(script.Parent.Parent, TweenInfo.new(0.6, Enum.EasingStyle.Cubic, Enum.EasingDirection.Out), {
 			GroupTransparency = 1
@@ -2632,13 +2632,13 @@ local function NNCYQT_fake_script() -- Fake Script: StarterGui.AFEM.EmoteList
 	print("[AFEM] - Emote list listed.")
 	
 	local s = pcall(function()
-		print("[AFEM] -  Pulling animation packs from YARHM website...")
-		_G.AFEMAnimationPacksList = http:JSONDecode(game:HttpGet("https://raw.githubusercontent.com/Joystickplays/AFEM/refs/heads/main/animationpacks.json"))
+		print("[AFEM] -  Pulling animation packs from Bandu website...")
+		_G.AFEMAnimationPacksList = http:JSONDecode(game:HttpGet("https://raw.githubusercontent.com/Freeman4i37/bandu-scripts/refs/heads/main/emotes.json"))
 	end)
 	if not s then
 		print("[AFEM] - Getting from website failed. Using fallback...")
 		-- There's no fallback.
-		_G.AFEMAnimationPacksList = http:JSONDecode('[{"_comment":"All animation IDs has been pulled independently by the YARHM Team. If you are gonna use this for your own emotes menu, please credit us. We will be updating this list periodically and automatically."},{"CustomImage":"rbxassetid://0","Name":"Adidas","ProductId":0,"Animations":{"walk":{"WalkAnim":"http://www.roblox.com/asset/?id=18538146480"},"swimidle":{"SwimIdle":"http://www.roblox.com/asset/?id=18537387180},"idle":{"Animation1":"http://www.roblox.com/asset/?id=18538150608","Animation2":"http://www.roblox.com/asset/?id=18537376492"},"climb":{"ClimbAnim":"http://www.roblox.com/asset/?id=18538170170"},"jump":{"JumpAnim":"http://www.roblox.com/asset/?id=18538153691"},"fall":{"FallAnim":"http://www.roblox.com/asset/?id=18538164337"},"run":{"RunAnim":"http://www.roblox.com/asset/?id=18538133604},"swim":{"SwimAnim":"http://www.roblox.com/asset/?id=18538158932"}},"BundleId":0}
+		_G.AFEMAnimationPacksList = http:JSONDecode('[{"_comment":"All animation IDs has been pulled independently by the Bandu Team. If you are gonna use this for your own emotes menu, please credit us. We will be updating this list periodically and automatically."},{"CustomImage":"rbxassetid://0","Name":"Adidas","ProductId":0,"Animations":{"walk":{"WalkAnim":"http://www.roblox.com/asset/?id=18538146480"},"swimidle":{"SwimIdle":"http://www.roblox.com/asset/?id=18537387180},"idle":{"Animation1":"http://www.roblox.com/asset/?id=18538150608","Animation2":"http://www.roblox.com/asset/?id=18537376492"},"climb":{"ClimbAnim":"http://www.roblox.com/asset/?id=18538170170"},"jump":{"JumpAnim":"http://www.roblox.com/asset/?id=18538153691"},"fall":{"FallAnim":"http://www.roblox.com/asset/?id=18538164337"},"run":{"RunAnim":"http://www.roblox.com/asset/?id=18538133604},"swim":{"SwimAnim":"http://www.roblox.com/asset/?id=18538158932"}},"BundleId":0}]')
 	end
 	print("[AFEM] - Animation packs Listed.")
 end
