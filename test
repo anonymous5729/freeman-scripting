@@ -1,4 +1,4 @@
--- BANDU v1.6
+-- BANDU v1.60
 -- aku dah lupa tak ingat lagi
 
 if not game:IsLoaded() then
