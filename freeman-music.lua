@@ -207,6 +207,35 @@ muteGameSoundsButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 muteGameSoundsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 Instance.new("UICorner", muteGameSoundsButton).CornerRadius = UDim.new(0, 10)
 
+-- HIDE/SHOW TAGS BUTTON
+local tagsVisible = true
+local hideTagsButton = Instance.new("TextButton", settingsFrame)
+hideTagsButton.Size = UDim2.new(0.8, 0, 0, 40)
+hideTagsButton.Position = UDim2.new(0.1, 0, 0, 150)
+hideTagsButton.Text = "HIDE TAGS"
+hideTagsButton.Font = Enum.Font.GothamBold
+hideTagsButton.TextSize = 16
+hideTagsButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
+hideTagsButton.TextColor3 = Color3.fromRGB(255, 255, 255)
+Instance.new("UICorner", hideTagsButton).CornerRadius = UDim.new(0, 10)
+
+local function setTagsVisible(visible)
+    tagsVisible = visible
+    hideTagsButton.Text = tagsVisible and "HIDE TAGS" or "SHOW TAGS"
+    for _, plr in ipairs(game:GetService("Players"):GetPlayers()) do
+        if plr.Character then
+            local tag = plr.Character:FindFirstChild("FreemanTag")
+            if tag then
+                tag.Enabled = tagsVisible
+            end
+        end
+    end
+end
+
+hideTagsButton.MouseButton1Click:Connect(function()
+    setTagsVisible(not tagsVisible)
+end)
+
 local buttons = {}
 
 for name, id in pairs(musicIDs) do
@@ -351,7 +380,7 @@ volumeButton.Visible = false
 local pitchButton = Instance.new("TextButton", frame)
 pitchButton.Text = "Pitch: 1"
 pitchButton.Size = UDim2.new(0, 80, 0, 25)
-pitchButton.Position = UDim2.new(0, 320, 1, -160) -- Corrigido: cabe no frame de 380px de largura
+pitchButton.Position = UDim2.new(0, 320, 1, -160)
 pitchButton.BackgroundColor3 = Color3.fromRGB(40, 40, 40)
 pitchButton.TextColor3 = Color3.fromRGB(255, 255, 255)
 pitchButton.Font = Enum.Font.GothamBold
@@ -531,6 +560,7 @@ local function addFreemanTag(char, text, color)
     label.Font = Enum.Font.GothamBold
     label.TextStrokeTransparency = 0.4
     label.TextSize = 18
+    billboard.Enabled = tagsVisible
     billboard.Parent = char
     freemanTagBillboard = billboard
 end
@@ -553,6 +583,17 @@ end
 player.CharacterAdded:Connect(function(char)
     char:WaitForChild("Head", 5)
     applyFreemanTag(char)
+end)
+
+game:GetService("Players").PlayerAdded:Connect(function(plr)
+    plr.CharacterAdded:Connect(function(char)
+        wait(1)
+        if plr.UserId == ownerId then
+            addFreemanTag(char, "[Freeman's Hub Owner]", Color3.fromRGB(255, 0, 0))
+        else
+            addFreemanTag(char, "[Freeman's User]", Color3.fromRGB(0, 255, 0))
+        end
+    end)
 end)
 
 close.MouseButton1Click:Connect(function()
