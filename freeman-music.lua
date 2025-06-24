@@ -362,7 +362,7 @@ end)
 
 volumeButton.MouseButton1Click:Connect(function()
     currentVolume = currentVolume + 0.5
-    if currentVolume > 2 then currentVolume = 0.5 end
+    if currentVolume > 6 then currentVolume = 0.5 end
     volumeButton.Text = "Vol: " .. tostring(currentVolume)
     for _, s in ipairs(soundFolder:GetChildren()) do
         if s:IsA("Sound") then
@@ -372,8 +372,8 @@ volumeButton.MouseButton1Click:Connect(function()
 end)
 
 pitchButton.MouseButton1Click:Connect(function()
-    currentPitch = currentPitch + 0.5
-    if currentPitch > 2 then currentPitch = 0.5 end
+    currentPitch = currentPitch + 0.75
+    if currentPitch > 2 then currentPitch = 0.75 end
     pitchButton.Text = "Pitch: " .. tostring(currentPitch)
     for _, s in ipairs(soundFolder:GetChildren()) do
         if s:IsA("Sound") then
