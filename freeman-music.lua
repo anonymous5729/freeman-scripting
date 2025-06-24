@@ -65,6 +65,60 @@ local function destroyAllNotificationBlocks()
     end
 end
 
+local function showSelectorPopup(titleText, options, callback)
+    if gui:FindFirstChild("SelectorPopup") then gui.SelectorPopup:Destroy() end
+    if gui:FindFirstChild("SelectorPopupBlock") then gui.SelectorPopupBlock:Destroy() end
+
+    local block = Instance.new("Frame", gui)
+    block.Name = "SelectorPopupBlock"
+    block.Size = UDim2.new(1,0,1,0)
+    block.BackgroundTransparency = 0.35
+    block.BackgroundColor3 = Color3.fromRGB(0,0,0)
+    block.ZIndex = 19999
+    block.Active = true
+
+    local popup = Instance.new("Frame", gui)
+    popup.Name = "SelectorPopup"
+    popup.Size = UDim2.new(0, 330, 0, 130)
+    popup.Position = UDim2.new(0.5, -165, 0.5, -65)
+    popup.BackgroundColor3 = Color3.fromRGB(25,25,25)
+    popup.BorderSizePixel = 0
+    popup.ZIndex = 20000
+    popup.Active = true
+    Instance.new("UICorner", popup).CornerRadius = UDim.new(0, 14)
+
+    local title = Instance.new("TextLabel", popup)
+    title.Size = UDim2.new(1, -16, 0, 32)
+    title.Position = UDim2.new(0,8,0,7)
+    title.BackgroundTransparency = 1
+    title.Text = titleText
+    title.TextColor3 = Color3.fromRGB(255,255,255)
+    title.TextSize = 16
+    title.Font = Enum.Font.GothamBold
+    title.ZIndex = 20001
+
+    local btnCount = #options
+    local btnW = math.floor((298-(btnCount-1)*7)/btnCount) -- padding entre
+    for i, opt in ipairs(options) do
+        local btn = Instance.new("TextButton", popup)
+        btn.Size = UDim2.new(0, btnW, 0, 38)
+        btn.Position = UDim2.new(0, 16+((btnW+7)*(i-1)), 0, 50)
+        btn.Text = tostring(opt)
+        btn.Font = Enum.Font.GothamBold
+        btn.TextSize = 16
+        btn.TextColor3 = Color3.fromRGB(255,255,255)
+        btn.BackgroundColor3 = Color3.fromRGB(40,40,40)
+        btn.ZIndex = 20001
+        Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 8)
+
+        btn.MouseButton1Click:Connect(function()
+            popup:Destroy()
+            block:Destroy()
+            if callback then callback(opt) end
+        end)
+    end
+end
+
 local frame = Instance.new("Frame", gui)
 frame.Size = UDim2.new(0, 340, 0, 360)
 frame.Position = UDim2.new(1, -355, 0.5, -180)
@@ -85,7 +139,7 @@ local title = Instance.new("TextLabel", header)
 title.Size = UDim2.new(1, -110, 1, 0)
 title.Position = UDim2.new(0, 10, 0, 0)
 title.BackgroundTransparency = 1
-title.Text = "Freeman HUB 🎵 4.0"
+title.Text = "Freeman HUB 🎵 4.75"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.Font = Enum.Font.FredokaOne
 title.TextSize = 18
@@ -361,27 +415,27 @@ stopButton.MouseButton1Click:Connect(function()
 end)
 
 volumeButton.MouseButton1Click:Connect(function()
-    currentVolume = currentVolume + 0.25
-    if currentVolume > 6 then currentVolume = 0.25 end
-    volumeButton.Text = "Vol: " .. tostring(currentVolume)
-    for _, s in ipairs(soundFolder:GetChildren()) do
-        if s:IsA("Sound") then
-            s.Volume = currentVolume
+    showSelectorPopup("CHOOSE THE VOLUME", {0.5,0.75,1.0,1.5,2.0,3.0,4.0,5.0,6.0}, function(vol)
+        currentVolume = vol
+        volumeButton.Text = "Vol: " .. tostring(currentVolume)
+        for _, s in ipairs(soundFolder:GetChildren()) do
+            if s:IsA("Sound") then
+                s.Volume = currentVolume
+            end
         end
-    end
+    end)
 end)
 
 pitchButton.MouseButton1Click:Connect(function()
-    currentPitch = currentPitch + 0.05
-    if currentPitch > 2 then currentPitch = 0.75 end
-    -- Arrendondamento para evitar muitas casas decimais
-    currentPitch = math.floor(currentPitch * 100) / 100
-    pitchButton.Text = "Pitch: " .. tostring(currentPitch)
-    for _, s in ipairs(soundFolder:GetChildren()) do
-        if s:IsA("Sound") then
-            s.Pitch = currentPitch
+    showSelectorPopup("CHOOSE THE PITCH", {0.75,1.0,1.5,2.0,3.0}, function(pitch)
+        currentPitch = pitch
+        pitchButton.Text = "Pitch: " .. tostring(currentPitch)
+        for _, s in ipairs(soundFolder:GetChildren()) do
+            if s:IsA("Sound") then
+                s.Pitch = currentPitch
+            end
         end
-    end
+    end)
 end)
 
 modeButton.MouseButton1Click:Connect(function()
@@ -533,7 +587,7 @@ local function showAchievementBar(text, duration)
 end
 
 coroutine.wrap(function()
-    showAchievementBar("Welcome to Freeman HUB 3.5!\nScript by Freeman4i37.",4)
+    showAchievementBar("Welcome to Freeman HUB 4.75!\nScript by Freeman4i37.",4)
 end)()
 
 local ownerUsername = "Kaua_452"
