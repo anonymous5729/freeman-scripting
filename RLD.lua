@@ -537,6 +537,7 @@ local function clearEntitiesList()
 end
 
 local function startSpectate(part, entity)
+	if not (part and part.Parent) then return end
 	lastCameraSubject = camera.CameraSubject
 	camera.CameraSubject = part
 	entitiesFrame.Visible = false
@@ -574,8 +575,7 @@ local function buildEntitiesList()
 	end
 	local y = 0
 	for _, entity in pairs(folder:GetChildren()) do
-		local part = entity.PrimaryPart or entity:FindFirstChildWhichIsA("BasePart")
-		if part then
+		if entity then
 			local row = {}
 			local itemFrame = Instance.new("Frame")
 			itemFrame.Size = UDim2.new(1, 0, 0, 36)
@@ -613,11 +613,13 @@ local function buildEntitiesList()
 			distLabel.TextXAlignment = Enum.TextXAlignment.Right
 			distLabel.Parent = itemFrame
 			viewBtn.MouseButton1Click:Connect(function()
-				startSpectate(part, entity)
+				local part = entity.PrimaryPart or entity:FindFirstChildWhichIsA("BasePart")
+				if part and part.Parent then
+					startSpectate(part, entity)
+				end
 			end)
 			row.Frame = itemFrame
 			row.Entity = entity
-			row.Part = part
 			row.NameLabel = nameLabel
 			row.DistLabel = distLabel
 			table.insert(entityRows, row)
@@ -634,12 +636,13 @@ local function updateEntityRows()
 		buildEntitiesList()
 	end
 	for i, row in ipairs(entityRows) do
-		if row and row.Entity and row.Part and row.NameLabel and row.DistLabel then
+		if row and row.Entity and row.NameLabel and row.DistLabel then
 			if row.Entity.Parent == folder then
 				local dist = 0
+				local part = row.Entity.PrimaryPart or row.Entity:FindFirstChildWhichIsA("BasePart")
 				local hrp = player.Character and player.Character:FindFirstChild("HumanoidRootPart")
-				if hrp and row.Part and row.Part.Parent then
-					dist = (hrp.Position - row.Part.Position).Magnitude
+				if hrp and part and part.Parent then
+					dist = (hrp.Position - part.Position).Magnitude
 				end
 				row.DistLabel.Text = math.floor(dist) .. " studs away"
 				row.NameLabel.TextColor3 = getEntityColor(row.Entity)
@@ -683,7 +686,7 @@ task.spawn(function()
 		if entitiesFrame.Visible then
 			updateEntityRows()
 		end
-		task.wait(0.01)
+		task.wait(0.2) -- reduzido o lag!
 	end
 end)
 
