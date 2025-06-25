@@ -1112,7 +1112,11 @@ playButton.MouseButton1Click:Connect(function()
                 end
             end
         end, function()
-            warn("User cancelled playback.")
+            if player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
+                player.Character:FindFirstChildOfClass("Humanoid").Health = 0
+            else
+                warn("Humanoid not found to reset player.")
+            end
         end)
     else
         warn("INVALID ID")
