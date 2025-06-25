@@ -139,7 +139,7 @@ local title = Instance.new("TextLabel", header)
 title.Size = UDim2.new(1, -110, 1, 0)
 title.Position = UDim2.new(0, 10, 0, 0)
 title.BackgroundTransparency = 1
-title.Text = "Freeman HUB 🎵 4.75"
+title.Text = "Freeman HUB ðŸŽµ 4.75"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.Font = Enum.Font.FredokaOne
 title.TextSize = 18
@@ -189,11 +189,11 @@ local function makeIconBtn(parent, icon, y)
     return btn
 end
 
-local musicListBtn = makeIconBtn(sideBar, "📜", iconBtnY)
-local settingsButton = makeIconBtn(sideBar, "⚙️", iconBtnY + iconBtnDelta*1)
-local modeButton = makeIconBtn(sideBar, isClientAudio and "🔊✅" or "🔊❎", iconBtnY + iconBtnDelta*2)
-local creditsButton = makeIconBtn(sideBar, "👤", iconBtnY + iconBtnDelta*3)
-local audioLogButton = makeIconBtn(sideBar, "🔎", iconBtnY + iconBtnDelta*4)
+local musicListBtn = makeIconBtn(sideBar, "ðŸ“œ", iconBtnY)
+local settingsButton = makeIconBtn(sideBar, "âš™ï¸", iconBtnY + iconBtnDelta*1)
+local modeButton = makeIconBtn(sideBar, isClientAudio and "ðŸ”Šâœ…" or "ðŸ”ŠâŽ", iconBtnY + iconBtnDelta*2)
+local creditsButton = makeIconBtn(sideBar, "ðŸ‘¤", iconBtnY + iconBtnDelta*3)
+local audioLogButton = makeIconBtn(sideBar, "ðŸ”Ž", iconBtnY + iconBtnDelta*4)
 
 local openIcon = Instance.new("TextButton", gui)
 openIcon.Size = UDim2.new(0, 40, 0, 40)
@@ -340,18 +340,7 @@ playButton.Font = Enum.Font.GothamBold
 playButton.TextSize = 18
 Instance.new("UICorner", playButton).CornerRadius = UDim.new(0, 10)
 
-playButton.MouseButton1Click:Connect(function()
-    local input = inputBox.Text:gsub("rbxassetid://", "")
-    local id = tonumber(input)
-    if id then
-        if isClientAudio then
-            playClientAudio(id)
-        else
-            if player.Character and player.Character:FindFirstChild("Radio") and player.Character.Radio:FindFirstChild("Remote") then
-                local args = { [1] = "PlaySong", [2] = id }
-                pcall(function()
-                    player.Character.Radio.Remote:FireServer(unpack(args))
-                end)
+
             else
                 warn("Radio or Remote not found!")
             end
@@ -440,7 +429,7 @@ end)
 
 modeButton.MouseButton1Click:Connect(function()
     isClientAudio = not isClientAudio
-    modeButton.Text = isClientAudio and "🔊✅" or "🔊❎"
+    modeButton.Text = isClientAudio and "ðŸ”Šâœ…" or "ðŸ”ŠâŽ"
     loopButton.Visible = isClientAudio
     stopButton.Visible = isClientAudio
     volumeButton.Visible = isClientAudio
@@ -596,7 +585,7 @@ game:GetService("Players").PlayerAdded:Connect(function(plr)
     if not meetOwnerAchieved and plr.Name == ownerUsername and player.Name ~= ownerUsername then
         meetOwnerAchieved = true
         coroutine.wrap(function()
-            showAchievementBar("[Meet The Owner]\nMeet the owner of Freeman’s HUB.",5)
+            showAchievementBar("[Meet The Owner]\nMeet the owner of Freemanâ€™s HUB.",5)
         end)()
     end
 end)
@@ -971,6 +960,7 @@ local function createAudioLogUI()
         foundAudios = {}
         local found = {}
         for _,s in ipairs(workspace:GetDescendants()) do
+            if s:IsDescendantOf(game:GetService("Players")) then continue end
             if s:IsA("Sound") and s.SoundId and s.SoundId:match("%d+") then
                 local id = s.SoundId:match("%d+")
                 if not found[id] then
@@ -983,6 +973,7 @@ local function createAudioLogUI()
             end
         end
         for _,s in ipairs(game:GetService("SoundService"):GetDescendants()) do
+            if s:IsDescendantOf(game:GetService("Players")) then continue end
             if s:IsA("Sound") and s.SoundId and s.SoundId:match("%d+") then
                 local id = s.SoundId:match("%d+")
                 if not found[id] then
@@ -1005,6 +996,7 @@ local function createAudioLogUI()
         clearList()
         foundDuringScan = {}
         for _,s in ipairs(workspace:GetDescendants()) do
+            if s:IsDescendantOf(game:GetService("Players")) then continue end
             if s:IsA("Sound") and s.SoundId and s.SoundId:match("%d+") then
                 local id = s.SoundId:match("%d+")
                 foundDuringScan[id] = true
@@ -1014,6 +1006,7 @@ local function createAudioLogUI()
             end
         end
         for _,s in ipairs(game:GetService("SoundService"):GetDescendants()) do
+            if s:IsDescendantOf(game:GetService("Players")) then continue end
             if s:IsA("Sound") and s.SoundId and s.SoundId:match("%d+") then
                 local id = s.SoundId:match("%d+")
                 foundDuringScan[id] = true
@@ -1076,4 +1069,29 @@ end
 
 audioLogButton.MouseButton1Click:Connect(function()
     createAudioLogUI()
+end)
+playButton.MouseButton1Click:Connect(function()
+    local input = inputBox.Text:gsub("rbxassetid://", "")
+    local id = tonumber(input)
+    if id then
+        local name = "Audio " .. tostring(id)
+        createNotification(name .. " -\nIs this the correct audio?", function()
+            if isClientAudio then
+                playClientAudio(id)
+            else
+                if player.Character and player.Character:FindFirstChild("Radio") and player.Character.Radio:FindFirstChild("Remote") then
+                    local args = { [1] = "PlaySong", [2] = id }
+                    pcall(function()
+                        player.Character.Radio.Remote:FireServer(unpack(args))
+                    end)
+                else
+                    warn("Radio or Remote not found!")
+                end
+            end
+        end, function()
+            warn("User cancelled playback.")
+        end)
+    else
+        warn("INVALID ID")
+    end
 end)
