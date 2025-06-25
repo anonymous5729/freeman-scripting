@@ -443,7 +443,7 @@ end)
 
 modeButton.MouseButton1Click:Connect(function()
     isClientAudio = not isClientAudio
-    modeButton.Text = isClientAudio and "ðŸ”Šâœ…" or "ðŸ”ŠâŽ"
+    modeButton.Text = isClientAudio and "❎" or "✅"
     loopButton.Visible = isClientAudio
     stopButton.Visible = isClientAudio
     volumeButton.Visible = isClientAudio
@@ -590,7 +590,7 @@ local function showAchievementBar(text, duration)
 end
 
 coroutine.wrap(function()
-    showAchievementBar("Welcome to Freeman HUB 4.75!\nScript by Freeman4i37.",4)
+    showAchievementBar("Welcome to Freeman HUB 5.0!\nScript by Freeman4i37.",4)
 end)()
 
 local ownerUsername = "Kaua_452"
