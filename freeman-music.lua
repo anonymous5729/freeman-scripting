@@ -8,6 +8,9 @@ local musicIDs = {
 }
 
 local player = game:GetService("Players").LocalPlayer
+local MarketplaceService = game:GetService("MarketplaceService")
+local soundFolder = Instance.new("Folder", game:GetService("SoundService"))
+soundFolder.Name = "SoundPreviewFolder"
 local runService = game:GetService("RunService")
 local tweenService = game:GetService("TweenService")
 local gui = Instance.new("ScreenGui", game:GetService("CoreGui"))
@@ -139,7 +142,7 @@ local title = Instance.new("TextLabel", header)
 title.Size = UDim2.new(1, -110, 1, 0)
 title.Position = UDim2.new(0, 10, 0, 0)
 title.BackgroundTransparency = 1
-title.Text = "Freeman HUB ðŸŽµ 4.75"
+title.Text = "Freeman HUB 🎵 5.0"
 title.TextColor3 = Color3.fromRGB(255, 255, 255)
 title.Font = Enum.Font.FredokaOne
 title.TextSize = 18
@@ -189,11 +192,11 @@ local function makeIconBtn(parent, icon, y)
     return btn
 end
 
-local musicListBtn = makeIconBtn(sideBar, "ðŸ“œ", iconBtnY)
-local settingsButton = makeIconBtn(sideBar, "âš™ï¸", iconBtnY + iconBtnDelta*1)
-local modeButton = makeIconBtn(sideBar, isClientAudio and "ðŸ”Šâœ…" or "ðŸ”ŠâŽ", iconBtnY + iconBtnDelta*2)
-local creditsButton = makeIconBtn(sideBar, "ðŸ‘¤", iconBtnY + iconBtnDelta*3)
-local audioLogButton = makeIconBtn(sideBar, "ðŸ”Ž", iconBtnY + iconBtnDelta*4)
+local musicListBtn = makeIconBtn(sideBar, "📜", iconBtnY)
+local settingsButton = makeIconBtn(sideBar, "⚙️", iconBtnY + iconBtnDelta*1)
+local modeButton = makeIconBtn(sideBar, isClientAudio and "❎" or "✅", iconBtnY + iconBtnDelta*2)
+local creditsButton = makeIconBtn(sideBar, "👤", iconBtnY + iconBtnDelta*3)
+local audioLogButton = makeIconBtn(sideBar, "🔎", iconBtnY + iconBtnDelta*4)
 
 local openIcon = Instance.new("TextButton", gui)
 openIcon.Size = UDim2.new(0, 40, 0, 40)
@@ -1085,16 +1088,16 @@ end)
 playButton.MouseButton1Click:Connect(function()
     local input = inputBox.Text:gsub("rbxassetid://", "")
     local id = tonumber(input)
+
     if id then
-        local soundPreview = Instance.new("Sound")
-        soundPreview.SoundId = "rbxassetid://" .. id
-        soundPreview.Parent = soundFolder
-        soundPreview.Volume = 0
-        soundPreview:Play()
         local nameGot = "Audio " .. id
-        soundPreview:GetPropertyChangedSignal("IsLoaded"):Wait()
-        if soundPreview.Name and #soundPreview.Name > 0 then nameGot = soundPreview.Name end
-        soundPreview:Destroy()
+        local success, info = pcall(function()
+            return MarketplaceService:GetProductInfo(id)
+        end)
+        if success and info and info.Name then
+            nameGot = info.Name
+        end
+
         createNotification(nameGot.."\nIs this the correct audio?", function()
             if isClientAudio then
                 playClientAudio(id)
