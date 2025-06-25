@@ -1085,11 +1085,18 @@ audioLogButton.MouseButton1Click:Connect(function()
     createAudioLogUI()
 end)
 
+local currentAudioId = nil
+
 playButton.MouseButton1Click:Connect(function()
     local input = inputBox.Text:gsub("rbxassetid://", "")
     local id = tonumber(input)
 
     if id then
+        if id == currentAudioId then
+            warn("Esse áudio já está tocando.")
+            return
+        end
+
         local nameGot = "Audio " .. id
         local success, info = pcall(function()
             return MarketplaceService:GetProductInfo(id)
@@ -1099,6 +1106,7 @@ playButton.MouseButton1Click:Connect(function()
         end
 
         createNotification(nameGot.."\nIs this the correct audio?", function()
+            currentAudioId = id
             if isClientAudio then
                 playClientAudio(id)
             else
@@ -1112,10 +1120,11 @@ playButton.MouseButton1Click:Connect(function()
                 end
             end
         end, function()
-            if player.Character and player.Character:FindFirstChildOfClass("Humanoid") then
-                player.Character:FindFirstChildOfClass("Humanoid").Health = 0
+            local humanoid = player.Character and player.Character:FindFirstChildWhichIsA("Humanoid")
+            if humanoid then
+                humanoid.Health = 0
             else
-                warn("Humanoid not found to reset player.")
+                warn("Could not reset player, humanoid not found.")
             end
         end)
     else
