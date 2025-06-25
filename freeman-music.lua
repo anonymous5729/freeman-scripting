@@ -340,7 +340,18 @@ playButton.Font = Enum.Font.GothamBold
 playButton.TextSize = 18
 Instance.new("UICorner", playButton).CornerRadius = UDim.new(0, 10)
 
-
+playButton.MouseButton1Click:Connect(function()
+    local input = inputBox.Text:gsub("rbxassetid://", "")
+    local id = tonumber(input)
+    if id then
+        if isClientAudio then
+            playClientAudio(id)
+        else
+            if player.Character and player.Character:FindFirstChild("Radio") and player.Character.Radio:FindFirstChild("Remote") then
+                local args = { [1] = "PlaySong", [2] = id }
+                pcall(function()
+                    player.Character.Radio.Remote:FireServer(unpack(args))
+                end)
             else
                 warn("Radio or Remote not found!")
             end
@@ -960,7 +971,7 @@ local function createAudioLogUI()
         foundAudios = {}
         local found = {}
         for _,s in ipairs(workspace:GetDescendants()) do
-            if s:IsDescendantOf(game:GetService("Players")) then continue end
+            if s:IsDescendantOf(player.Character) then continue end
             if s:IsA("Sound") and s.SoundId and s.SoundId:match("%d+") then
                 local id = s.SoundId:match("%d+")
                 if not found[id] then
@@ -973,7 +984,7 @@ local function createAudioLogUI()
             end
         end
         for _,s in ipairs(game:GetService("SoundService"):GetDescendants()) do
-            if s:IsDescendantOf(game:GetService("Players")) then continue end
+            if s:IsDescendantOf(player.Character) then continue end
             if s:IsA("Sound") and s.SoundId and s.SoundId:match("%d+") then
                 local id = s.SoundId:match("%d+")
                 if not found[id] then
@@ -996,7 +1007,7 @@ local function createAudioLogUI()
         clearList()
         foundDuringScan = {}
         for _,s in ipairs(workspace:GetDescendants()) do
-            if s:IsDescendantOf(game:GetService("Players")) then continue end
+            if s:IsDescendantOf(player.Character) then continue end
             if s:IsA("Sound") and s.SoundId and s.SoundId:match("%d+") then
                 local id = s.SoundId:match("%d+")
                 foundDuringScan[id] = true
@@ -1006,7 +1017,7 @@ local function createAudioLogUI()
             end
         end
         for _,s in ipairs(game:GetService("SoundService"):GetDescendants()) do
-            if s:IsDescendantOf(game:GetService("Players")) then continue end
+            if s:IsDescendantOf(player.Character) then continue end
             if s:IsA("Sound") and s.SoundId and s.SoundId:match("%d+") then
                 local id = s.SoundId:match("%d+")
                 foundDuringScan[id] = true
@@ -1070,12 +1081,21 @@ end
 audioLogButton.MouseButton1Click:Connect(function()
     createAudioLogUI()
 end)
+
 playButton.MouseButton1Click:Connect(function()
     local input = inputBox.Text:gsub("rbxassetid://", "")
     local id = tonumber(input)
     if id then
-        local name = "Audio " .. tostring(id)
-        createNotification(name .. " -\nIs this the correct audio?", function()
+        local soundPreview = Instance.new("Sound")
+        soundPreview.SoundId = "rbxassetid://" .. id
+        soundPreview.Parent = soundFolder
+        soundPreview.Volume = 0
+        soundPreview:Play()
+        local nameGot = "Audio " .. id
+        soundPreview:GetPropertyChangedSignal("IsLoaded"):Wait()
+        if soundPreview.Name and #soundPreview.Name > 0 then nameGot = soundPreview.Name end
+        soundPreview:Destroy()
+        createNotification(nameGot.."\nIs this the correct audio?", function()
             if isClientAudio then
                 playClientAudio(id)
             else
