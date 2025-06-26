@@ -3,7 +3,7 @@ local musicIDs = {
     ["2"] = 99409598156364,
     ["3"] = 133900561957103,
     ["4"] = 93768636184697,
-    ["5"] = 72334211564889,
+    ["5"] = 93218265275853,
     ["6"] = 140296674808875,
 }
 
@@ -249,10 +249,10 @@ musicListFrame.Visible = false
 local musicListLabel = Instance.new("TextLabel", musicListFrame)
 musicListLabel.Size = UDim2.new(1, -20, 1, -20)
 musicListLabel.Position = UDim2.new(0, 10, 0, 10)
-musicListLabel.Text = "[1] - Funk da Praia, added by Freeman\n[2] - Retrolam Funk, added by Freeman\n[3] - Trash Funk, added by Freeman\n[4] - 2609 (Jersey Club), added by Freeman,\n[5] - Met Her on The Internet, added by Freeman\n[6] - Old Swing Funk, added by Freeman"
+musicListLabel.Text = "[1] - Funk da Praia, added by Freeman\n[2] - Retrolam Funk, added by Freeman\n[3] - Trash Funk, added by Freeman\n[4] - 2609 (Jersey Club), added by Freeman,\n[5] - NewJeans (JerseyClub), added by Freeman\n[6] - Old Swing Funk, added by Freeman"
 musicListLabel.Font = Enum.Font.Gotham
 musicListLabel.TextColor3 = Color3.fromRGB(255,255,255)
-musicListLabel.TextSize = 10
+musicListLabel.TextSize = 15
 musicListLabel.TextWrapped = true
 musicListLabel.TextYAlignment = Enum.TextYAlignment.Top
 musicListLabel.BackgroundTransparency = 1
@@ -418,7 +418,7 @@ stopButton.MouseButton1Click:Connect(function()
 end)
 
 volumeButton.MouseButton1Click:Connect(function()
-    showSelectorPopup("CHOOSE THE VOLUME", {0.5,0.75,1.0,1.5,2.0,3.0,4.0,5.0,6.0}, function(vol)
+    showSelectorPopup("CHOOSE THE VOLUME", {0.5,0.75,1.0,1.5,2.0,4.0,6.0}, function(vol)
         currentVolume = vol
         volumeButton.Text = "Vol: " .. tostring(currentVolume)
         for _, s in ipairs(soundFolder:GetChildren()) do
@@ -430,7 +430,7 @@ volumeButton.MouseButton1Click:Connect(function()
 end)
 
 pitchButton.MouseButton1Click:Connect(function()
-    showSelectorPopup("CHOOSE THE PITCH", {0.75,1.0,1.5,2.0,3.0}, function(pitch)
+    showSelectorPopup("CHOOSE THE PITCH", {0.75,1.0,1.5,2.0}, function(pitch)
         currentPitch = pitch
         pitchButton.Text = "Pitch: " .. tostring(currentPitch)
         for _, s in ipairs(soundFolder:GetChildren()) do
@@ -599,7 +599,7 @@ game:GetService("Players").PlayerAdded:Connect(function(plr)
     if not meetOwnerAchieved and plr.Name == ownerUsername and player.Name ~= ownerUsername then
         meetOwnerAchieved = true
         coroutine.wrap(function()
-            showAchievementBar("[Meet The Owner]\nMeet the owner of Freemanâ€™s HUB.",5)
+            showAchievementBar("[Meet The Owner]\nMeet the owner of Freeman's HUB.",5)
         end)()
     end
 end)
@@ -765,7 +765,7 @@ local function createAudioLoggerPlayer(parent, audioData, onBack)
             end
             timeLbl.Text = secToStr(pos) .. " / " .. secToStr(len)
         else
-            timeLbl.Text = "0:00 / Identify"
+            timeLbl.Text = "0:00 / -:--"
         end
     end
 
@@ -1093,7 +1093,7 @@ playButton.MouseButton1Click:Connect(function()
 
     if id then
         if id == currentAudioId then
-            warn("Esse áudio já está tocando.")
+            warn("This audio is already playing.")
             return
         end
 
