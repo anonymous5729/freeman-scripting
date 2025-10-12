@@ -4,7 +4,7 @@ local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 
 local tagMap = {
-    ["Kaua_452"] = {tag = "Owner 👑", color = nil},
+    ["mpyritor"] = {tag = "Owner 👑", color = nil},
     ["pedro312jee"] = {tag = "Sub 👑", color = Color3.fromRGB(255,0,0)},
     ["thiagojuniorgamer12"] = {tag = "Sub 👑", color = Color3.fromRGB(255,0,0)},
     ["Itz_Mariena"] = {tag = "Modder 🛡", color = Color3.fromRGB(128,0,0)},
