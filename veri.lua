@@ -6,7 +6,7 @@ local premiumUsers = {
     ["pedro312jee"] = true,
     ["xes_jsok"] = true,
     ["Itz_Mariena"] = true,
-    ["thiagojuniorgamer12"] = true,
+    ["thiagojuniorgamer12"] = true
 }
 
 local function isAllowed(name)
