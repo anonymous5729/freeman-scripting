@@ -9,10 +9,6 @@ local premiumUsers = {
     ["thiagojuniorgamer12"] = true
 }
 
-local function isAllowed(name)
-    return premiumUsers[name]
-end
-
 local gui = Instance.new("ScreenGui")
 gui.Name = "FreemanVerificationHub"
 gui.ResetOnSpawn = false
@@ -44,7 +40,7 @@ msg.TextSize = 18
 msg.TextColor3 = Color3.fromRGB(255,255,255)
 
 local function executarPremium()
-    msg.Text = "Função premium executada!"
+    msg.Text = "Bem-vindo!"
     frame.BackgroundColor3 = Color3.fromRGB(10, 60, 20)
     wait(1.5)
     gui:Destroy()
@@ -54,7 +50,7 @@ end
 coroutine.wrap(function()
     msg.Text = "Verificando acesso..."
     wait(3)
-    if isAllowed(player.Name) then
+    if premiumUsers[player.Name] == true then
         msg.Text = "Usuário Liberado!"
         wait(1)
         executarPremium()
