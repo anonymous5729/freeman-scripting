@@ -55,7 +55,7 @@ coroutine.wrap(function()
     msg.Text = "Verificando acesso..."
     wait(3)
     if isAllowed(player.Name) then
-        msg.Text = "✅ Usuário Liberado, executando premium..."
+        msg.Text = "Usuário Liberado!"
         wait(1)
         executarPremium()
     else
