@@ -10,14 +10,6 @@ local tagMap = {
     ["Itz_Mariena"] = {tag = "Modder 🛡", color = Color3.fromRGB(128,0,0)},
     ["xes_jsok"] = {tag = "Staff 🛠", color = Color3.fromRGB(0,255,0)},
 }
-local tagType, tagColor
-if tagMap[player.Name] then
-    tagType = tagMap[player.Name].tag
-    tagColor = tagMap[player.Name].color
-else
-    tagType = "Premium 💎"
-    tagColor = Color3.fromRGB(0,120,255)
-end
 
 local musicIDs = {
     ["1"] = 94718473830640, ["2"] = 92209428926055, ["3"] = 133900561957103, ["4"] = 93768636184697,
@@ -59,11 +51,15 @@ local function showTagForPlayer(plr)
     if tagMap[plr.Name] then
         tType = tagMap[plr.Name].tag
         tColor = tagMap[plr.Name].color
-    else
+    elseif plr == player then
         tType = "Premium 💎"
         tColor = Color3.fromRGB(0,120,255)
+    else
+        tType = nil
+        tColor = nil
     end
     local function addTag()
+        if not tType then return end -- Só mostra tag se for especial ou o próprio local player premium
         local char = plr.Character
         if not char or not char:FindFirstChild("Head") then return end
         if char:FindFirstChild("FreemanTag") then char.FreemanTag:Destroy() end
@@ -76,7 +72,7 @@ local function showTagForPlayer(plr)
         local txt = Instance.new("TextLabel", tag)
         txt.Size = UDim2.new(1,0,1,0)
         txt.BackgroundTransparency = 1
-        txt.Text = tType or ""
+        txt.Text = tType
         txt.TextColor3 = tColor or gold
         txt.TextStrokeTransparency = 0
         txt.Font = Enum.Font.GothamBlack
