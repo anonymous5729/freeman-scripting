@@ -2,7 +2,7 @@ local player = game:GetService("Players").LocalPlayer
 
 local premiumUsers = {
     ["JumexD24"] = true,
-    ["Kaua_452"] = true,
+    ["Kaua_452"] = false,
     ["pedro312jee"] = true,
     ["xes_jsok"] = true,
     ["Itz_Mariena"] = true,
