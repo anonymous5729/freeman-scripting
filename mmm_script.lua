@@ -1,8 +1,11 @@
--- Proteção de execução: só permite se foi executado via verimmm.lua
-if not (_G.MMM_VERIFIED and _G.MMM_VERIFIED == true) then
+-- Proteção reforçada: só executa se o loader correto rodou antes
+local keyName = "_G.X9FJ3LK29_MMM"
+if not (_G.X9FJ3LK29_MMM and _G.X9FJ3LK29_MMM == true) then
     game.Players.LocalPlayer:Kick("Nice try.")
     return
 end
+-- Limpa a variável para não ser reaproveitada por outro script
+_G.X9FJ3LK29_MMM = nil
 
 if game.CoreGui:FindFirstChild("MMM_UI") then game.CoreGui.MMM_UI:Destroy() end
 
