@@ -34,7 +34,9 @@ frame.BorderSizePixel = 0
 frame.Active = true
 frame.Draggable = true
 frame.Parent = gui
-Instance.new("UICorner", frame).CornerRadius = UDim.new(0, 10)
+local frameCorner = Instance.new("UICorner")
+frameCorner.CornerRadius = UDim.new(0, 10)
+frameCorner.Parent = frame
 
 local titleBar = Instance.new("Frame")
 titleBar.Size = UDim2.new(1, 0, 0, 44)
@@ -42,12 +44,15 @@ titleBar.Position = UDim2.new(0, 0, 0, 0)
 titleBar.BackgroundColor3 = borderColor
 titleBar.BorderSizePixel = 0
 titleBar.Parent = frame
-Instance.new("UICorner", titleBar).CornerRadius = UDim.new(0, 10)
+local titleBarCorner = Instance.new("UICorner")
+titleBarCorner.CornerRadius = UDim.new(0, 10)
+titleBarCorner.Parent = titleBar
 
 local title = Instance.new("TextLabel")
 title.Text = "Freeman HUB: MMM"
 title.Size = UDim2.new(1, -110, 1, 0)
-title.Position = UDim2.new(0.BackgroundTransparency = 1
+title.Position = UDim2.new(0, 15, 0, 0)
+title.BackgroundTransparency = 1
 title.TextColor3 = Color3.fromRGB(220, 220, 220)
 title.Font = Enum.Font.GothamBold
 title.TextScaled = true
@@ -64,7 +69,9 @@ closeButton.Font = Enum.Font.GothamBold
 closeButton.TextScaled = true
 closeButton.BorderSizePixel = 0
 closeButton.Parent = titleBar
-Instance.new("UICorner", closeButton).CornerRadius = UDim.new(0, 7)
+local closeButtonCorner = Instance.new("UICorner")
+closeButtonCorner.CornerRadius = UDim.new(0, 7)
+closeButtonCorner.Parent = closeButton
 
 local minimizeButton = Instance.new("TextButton")
 minimizeButton.Text = "-"
@@ -76,7 +83,9 @@ minimizeButton.Font = Enum.Font.GothamBold
 minimizeButton.TextScaled = true
 minimizeButton.BorderSizePixel = 0
 minimizeButton.Parent = titleBar
-Instance.new("UICorner", minimizeButton).CornerRadius = UDim.new(0, 7)
+local minimizeButtonCorner = Instance.new("UICorner")
+minimizeButtonCorner.CornerRadius = UDim.new(0, 7)
+minimizeButtonCorner.Parent = minimizeButton
 
 local miniButton = Instance.new("TextButton")
 miniButton.Size = UDim2.new(0, 40, 0, 40)
@@ -89,7 +98,9 @@ miniButton.TextScaled = true
 miniButton.Visible = false
 miniButton.BorderSizePixel = 0
 miniButton.Parent = gui
-Instance.new("UICorner", miniButton).CornerRadius = UDim.new(0, 10)
+local miniButtonCorner = Instance.new("UICorner")
+miniButtonCorner.CornerRadius = UDim.new(0, 10)
+miniButtonCorner.Parent = miniButton
 
 local btnHolder = Instance.new("Frame")
 btnHolder.Size = UDim2.new(1, -32, 0, 96)
@@ -108,7 +119,9 @@ local function makeBtn(txt, y)
     btn.TextScaled = true
     btn.Parent = btnHolder
     btn.BorderSizePixel = 0
-    Instance.new("UICorner", btn).CornerRadius = UDim.new(0, 7)
+    local btnCorner = Instance.new("UICorner")
+    btnCorner.CornerRadius = UDim.new(0, 7)
+    btnCorner.Parent = btn
     return btn
 end
 
