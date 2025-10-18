@@ -4,16 +4,16 @@ local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 
 local tagMap = {
-    ["Kaua_452"] = {tag = "Owner 👑", color = Color3.fromRGB(255, 215, 0)},
-    ["pedro312jee"] = {tag = "Sub 👑", color = Color3.fromRGB(255, 30, 70)},
-    ["thiagojuniorgamer12"] = {tag = "Sub 👑", color = Color3.fromRGB(255, 30, 70)},
-    ["Itz_Mariena"] = {tag = "Modder 🛡", color = Color3.fromRGB(128, 0, 128)},
-    ["User"] = {tag = "Staff 🛠", color = Color3.fromRGB(0, 180, 255)},
+    ["Kaua_452"] = {tag = "👑 Owner", color = Color3.fromRGB(255, 215, 0)},
+    ["pedro312jee"] = {tag = "👑 Sub-Leader", color = Color3.fromRGB(255, 30, 70)},
+    ["thiagojuniorgamer12"] = {tag = "👑 Sub-Leader", color = Color3.fromRGB(255, 30, 70)},
+    ["Itz_Mariena"] = {tag = "🎩 Overseer", color = Color3.fromRGB(128, 0, 128)},
+    ["User"] = {tag = "🛠 Staff", color = Color3.fromRGB(0, 180, 255)},
 }
 
 local function getPlayerTag(plr)
     if tagMap[plr.Name] then return tagMap[plr.Name].tag, tagMap[plr.Name].color
-    elseif plr == player then return "Premium 💎", Color3.fromRGB(0,120,255)
+    elseif plr == player then return "💎 Premium", Color3.fromRGB(0,120,255)
     else return nil, nil end
 end
 local tagType, tagColor = getPlayerTag(player)
@@ -249,7 +249,7 @@ local function createVisualizer()
             local height = math.clamp(1.2 + (barLoud/320) + math.abs(math.sin(t*3 + i*1.5))*0.23 + freqOffset, 1, 4)
             line.Size = Vector3.new(0.22, height, 0.22)
             line.CFrame = hrp.CFrame * CFrame.new(offset) * CFrame.new(0, height/2, 0)
-            if tagType == "Owner 👑" then
+            if tagType == "👑 Owner" then
                 line.Color = gold
             else
                 line.Color = tagColor and tagColor:Lerp(Color3.fromRGB(255,255,255), 0.45 + 0.5 * math.abs(math.sin(t + i))) or gold
