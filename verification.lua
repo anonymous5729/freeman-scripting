@@ -8,7 +8,7 @@ local tagMap = {
     ["pedro312jee"] = {tag = "Sub 👑", color = Color3.fromRGB(255, 30, 70)},
     ["thiagojuniorgamer12"] = {tag = "Sub 👑", color = Color3.fromRGB(255, 30, 70)},
     ["Itz_Mariena"] = {tag = "Modder 🛡", color = Color3.fromRGB(128, 0, 128)},
-    ["xes_jsok"] = {tag = "Staff 🛠", color = Color3.fromRGB(0, 180, 255)},
+    ["User"] = {tag = "Staff 🛠", color = Color3.fromRGB(0, 180, 255)},
 }
 
 local function getPlayerTag(plr)
