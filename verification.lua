@@ -4,19 +4,22 @@ local HttpService = game:GetService("HttpService")
 local RunService = game:GetService("RunService")
 
 local tagMap = {
-    ["Kaua_452"] = {tag = "👑 Owner", color = Color3.fromRGB(255, 215, 0)},
-    ["pedro312jee"] = {tag = "👑 Sub-Leader", color = Color3.fromRGB(255, 30, 70)},
-    ["thiagojuniorgamer12"] = {tag = "👑 Sub-Leader", color = Color3.fromRGB(255, 30, 70)},
-    ["Itz_Mariena"] = {tag = "🎩 Overseer", color = Color3.fromRGB(128, 0, 128)},
-    ["User"] = {tag = "🛠 Staff", color = Color3.fromRGB(0, 180, 255)},
+    ["Kaua_452"] = {tag = "👑 OWNER", color = Color3.fromRGB(255, 215, 0), gradient = Color3.fromRGB(255, 175, 0)},
+    ["pedro312jee"] = {tag = "👑 SUB-OWNER", color = Color3.fromRGB(255, 30, 70), gradient = Color3.fromRGB(255, 90, 140)},
+    ["thiagojuniorgamer12"] = {tag = "👑 SUB-OWNER", color = Color3.fromRGB(255, 30, 70), gradient = Color3.fromRGB(255, 90, 140)},
+    ["Itz_Mariena"] = {tag = "🎩 OVERSEER", color = Color3.fromRGB(128, 0, 128), gradient = Color3.fromRGB(180, 0, 220)},
+    ["User"] = {tag = "🛠 STAFF", color = Color3.fromRGB(0, 180, 255), gradient = Color3.fromRGB(0, 250, 255)},
 }
-
 local function getPlayerTag(plr)
-    if tagMap[plr.Name] then return tagMap[plr.Name].tag, tagMap[plr.Name].color
-    elseif plr == player then return "💎 Premium", Color3.fromRGB(0,120,255)
-    else return nil, nil end
+    if tagMap[plr.Name] then
+        return tagMap[plr.Name].tag, tagMap[plr.Name].color, tagMap[plr.Name].gradient
+    elseif plr == player then
+        return "💎 PREMIUM", Color3.fromRGB(0,120,255), Color3.fromRGB(0,180,255)
+    else
+        return nil, nil, nil
+    end
 end
-local tagType, tagColor = getPlayerTag(player)
+local tagType, tagColor, tagGradient = getPlayerTag(player)
 
 local musicIDs = {
     ["1"] = 94718473830640, ["2"] = 92209428926055, ["3"] = 133900561957103, ["4"] = 93768636184697,
@@ -58,8 +61,6 @@ local musicNames = {
     ["55"] = "Piseiro com sertanejo",
 }
 
-
-
 local gold = Color3.fromRGB(255,215,0)
 local white = Color3.fromRGB(255,255,255)
 local darkBg = Color3.fromRGB(20,20,20)
@@ -71,8 +72,9 @@ local function getPlayerGui()
     return gui
 end
 
+-- TAG personalizada e animada
 local function showTagForPlayer(plr)
-    local tType, tColor = getPlayerTag(plr)
+    local tType, tColor, tGradient = getPlayerTag(plr)
     local function addTag()
         if not tType then return end
         local char = plr.Character
@@ -80,24 +82,48 @@ local function showTagForPlayer(plr)
         if char:FindFirstChild("FreemanTag") then char.FreemanTag:Destroy() end
         local tag = Instance.new("BillboardGui", char)
         tag.Name = "FreemanTag"
-        tag.Size = UDim2.new(0, 130, 0, 40)
-        tag.StudsOffset = Vector3.new(0, 3.2, 0)
+        tag.Size = UDim2.new(0, 150, 0, 52)
+        tag.StudsOffset = Vector3.new(0, 3.6, 0)
         tag.Adornee = char:FindFirstChild("Head")
         tag.AlwaysOnTop = true
-        local txt = Instance.new("TextLabel", tag)
+        tag.MaxDistance = 70
+
+        local bg = Instance.new("Frame", tag)
+        bg.Size = UDim2.new(1,0,1,0)
+        bg.BackgroundTransparency = 0.35
+        bg.BackgroundColor3 = tColor or Color3.fromRGB(40,40,40)
+        local corner = Instance.new("UICorner", bg)
+        corner.CornerRadius = UDim.new(1, 0)
+
+        local gradient = Instance.new("UIGradient", bg)
+        gradient.Color = ColorSequence.new{
+            ColorSequenceKeypoint.new(0, tColor or Color3.fromRGB(255,255,255)),
+            ColorSequenceKeypoint.new(1, tGradient or Color3.fromRGB(200,200,200))
+        }
+        gradient.Rotation = 90
+
+        local txt = Instance.new("TextLabel", bg)
         txt.Size = UDim2.new(1,0,1,0)
         txt.BackgroundTransparency = 1
         txt.Text = tType
-        txt.TextColor3 = tColor or gold
-        txt.TextStrokeTransparency = 0
-        txt.Font = Enum.Font.GothamBlack
-        txt.TextSize = 20
-        txt.TextStrokeColor3 = white
+        txt.TextColor3 = Color3.fromRGB(255,255,255)
+        txt.TextStrokeTransparency = 0.2
+        txt.Font = Enum.Font.FredokaOne
+        txt.TextSize = 24
+        txt.TextStrokeColor3 = tColor or Color3.fromRGB(255,255,255)
+        txt.TextXAlignment = Enum.TextXAlignment.Center
+
+        local glow = Instance.new("UIStroke", bg)
+        glow.Color = tGradient or Color3.fromRGB(255,255,255)
+        glow.Thickness = 3.5
+        glow.Transparency = 0.4
+
+        local pulseTween = tweenService:Create(bg, TweenInfo.new(1.5, Enum.EasingStyle.Sine, Enum.EasingDirection.InOut, -1, true), {BackgroundTransparency = 0.55})
+        pulseTween:Play()
     end
     if plr.Character then addTag() end
     plr.CharacterAdded:Connect(function() wait(1) addTag() end)
 end
-
 for _,plr in ipairs(game:GetService("Players"):GetPlayers()) do
     showTagForPlayer(plr)
 end
@@ -105,13 +131,12 @@ game:GetService("Players").PlayerAdded:Connect(function(plr)
     showTagForPlayer(plr)
 end)
 
-local tagType, tagColor = getPlayerTag(player)
+local tagType, tagColor, tagGradient = getPlayerTag(player)
 
 local screenGui = Instance.new("ScreenGui")
 screenGui.Name = "FreemanHubPremium"
 screenGui.ResetOnSpawn = false
 screenGui.Parent = getPlayerGui()
-
 local mainFrame = Instance.new("Frame")
 mainFrame.Name = "FreemanMusicMain"
 mainFrame.Size = UDim2.new(0, 370, 0, 470)
@@ -210,7 +235,6 @@ local function formatTime(t)
     return string.format("%02d:%02d", m, s)
 end
 
-
 local function removeVisualizer()
     for _, part in ipairs(visualizerParts) do
         if part and part.Parent then part:Destroy() end
@@ -264,7 +288,7 @@ local function createVisualizer()
             local height = math.clamp(1.2 + (barLoud/320) + math.abs(math.sin(t*3 + i*1.5))*0.23 + freqOffset, 1, 4)
             line.Size = Vector3.new(0.22, height, 0.22)
             line.CFrame = hrp.CFrame * CFrame.new(offset) * CFrame.new(0, height/2, 0)
-            if tagType == "👑 Owner" then
+            if tagType == "👑 ᴏᴡɴᴇʀ" then
                 line.Color = gold
             else
                 line.Color = tagColor and tagColor:Lerp(Color3.fromRGB(255,255,255), 0.45 + 0.5 * math.abs(math.sin(t + i))) or gold
@@ -272,7 +296,6 @@ local function createVisualizer()
         end
     end)
 end
-
 
 local function getPremiumSoundsFolder()
     local folder = workspace:FindFirstChild("PremiumSounds")
@@ -520,6 +543,78 @@ grid.HorizontalAlignment = Enum.HorizontalAlignment.Center
 grid.VerticalAlignment = Enum.VerticalAlignment.Top
 grid.FillDirectionMaxCells = 2
 
+-- Notificação animada CLIENT AUDIO (direita -> esquerda)
+local function showClientAudioNotification(musicName, soundObj)
+    if screenGui:FindFirstChild("FreemanNoti") then
+        screenGui.FreemanNoti:Destroy()
+    end
+    local noti = Instance.new("Frame", screenGui)
+    noti.Name = "FreemanNoti"
+    noti.Size = UDim2.new(0, 260, 0, 66)
+    noti.Position = UDim2.new(1, 280, 1, -130)
+    noti.BackgroundColor3 = tagColor or Color3.fromRGB(0,120,255)
+    noti.BackgroundTransparency = 0.75
+    noti.ZIndex = 99
+    Instance.new("UICorner", noti).CornerRadius = UDim.new(1,0)
+    local stroke = Instance.new("UIStroke", noti)
+    stroke.Color = tagGradient or Color3.fromRGB(255,255,255)
+    stroke.Thickness = 2
+    stroke.Transparency = 0.45
+    local gradient = Instance.new("UIGradient", noti)
+    gradient.Color = ColorSequence.new{
+        ColorSequenceKeypoint.new(0, tagColor or Color3.fromRGB(0,120,255)),
+        ColorSequenceKeypoint.new(1, tagGradient or Color3.fromRGB(0,180,255))
+    }
+    gradient.Rotation = 0
+    local lblTitle = Instance.new("TextLabel", noti)
+    lblTitle.Size = UDim2.new(1, -20, 0, 30)
+    lblTitle.Position = UDim2.new(0, 10, 0, 4)
+    lblTitle.BackgroundTransparency = 1
+    lblTitle.Text = "🎵 "..musicName
+    lblTitle.Font = Enum.Font.FredokaOne
+    lblTitle.TextSize = 22
+    lblTitle.TextColor3 = Color3.fromRGB(255,255,255)
+    lblTitle.TextStrokeTransparency = 0.35
+    lblTitle.TextXAlignment = Enum.TextXAlignment.Left
+    local lblTime = Instance.new("TextLabel", noti)
+    lblTime.Size = UDim2.new(1, -20, 0, 22)
+    lblTime.Position = UDim2.new(0, 10, 0, 36)
+    lblTime.BackgroundTransparency = 1
+    lblTime.Font = Enum.Font.GothamBold
+    lblTime.TextSize = 16
+    lblTime.TextColor3 = Color3.fromRGB(220,220,220)
+    lblTime.TextStrokeTransparency = 0.55
+    lblTime.TextXAlignment = Enum.TextXAlignment.Left
+    lblTime.Text = "00:00 - 00:00"
+    local conn
+    conn = RunService.RenderStepped:Connect(function()
+        if soundObj and soundObj.Parent and soundObj.IsPlaying then
+            local pos = soundObj.TimePosition or 0
+            local len = soundObj.TimeLength or 0
+            lblTime.Text = string.format("%02d:%02d", math.floor(pos/60), math.floor(pos%60)).." - "..string.format("%02d:%02d", math.floor(len/60), math.floor(len%60))
+        else
+            lblTime.Text = "00:00 - 00:00"
+        end
+    end)
+    local tweenIn = tweenService:Create(noti, TweenInfo.new(0.5, Enum.EasingStyle.Back, Enum.EasingDirection.Out), {
+        Position = UDim2.new(1, -270, 1, -130)
+    })
+    tweenIn:Play()
+    spawn(function()
+        local t0 = tick()
+        while tick()-t0 < 8 and soundObj and soundObj.IsPlaying do wait() end
+        if conn then conn:Disconnect() end
+        if noti then
+            local tweenOut = tweenService:Create(noti, TweenInfo.new(0.4, Enum.EasingStyle.Sine, Enum.EasingDirection.In), {
+                Position = UDim2.new(1, 280, 1, -130)
+            })
+            tweenOut:Play()
+            tweenOut.Completed:Wait()
+            noti:Destroy()
+        end
+    end)
+end
+
 for i = 1, 55 do
     local btn = Instance.new("TextButton")
     btn.Size = UDim2.new(0, 105, 0, 44)
@@ -552,6 +647,7 @@ for i = 1, 55 do
             local soundObj = playClientAudio(id)
             if visualizerEnabled then createVisualizer(soundObj) end
             showCLInfo(name, soundObj)
+            showClientAudioNotification(name, soundObj)
         end
     end)
 end
@@ -570,6 +666,7 @@ tocarBtn.MouseButton1Click:Connect(function()
         local soundObj = playClientAudio(id)
         if visualizerEnabled then createVisualizer(soundObj) end
         showCLInfo(name, soundObj)
+        showClientAudioNotification(name, soundObj)
     end
 end)
 
@@ -585,7 +682,6 @@ local stroke = Instance.new("UIStroke", musicListFrame)
 stroke.Color = tagColor or gold
 stroke.Thickness = 1.25
 stroke.Transparency = 0.7
-
 local musicScroll = Instance.new("ScrollingFrame", musicListFrame)
 musicScroll.Size = UDim2.new(1, 0, 1, 0)
 musicScroll.BackgroundTransparency = 1
