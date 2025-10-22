@@ -79,9 +79,9 @@ local function showTagForPlayer(plr)
         if not tType then return end
         local char = plr.Character
         if not char or not char:FindFirstChild("Head") then return end
-        if char:FindFirstChild("FreemanTag") then char.FreemanTag:Destroy() end
+        if char:FindFirstChild("AuralynxTag") then char.AuralynxTag:Destroy() end
         local tag = Instance.new("BillboardGui", char)
-        tag.Name = "FreemanTag"
+        tag.Name = "AuralynxTag"
         tag.Size = UDim2.new(0, 150, 0, 52)
         tag.StudsOffset = Vector3.new(0, 3.6, 0)
         tag.Adornee = char:FindFirstChild("Head")
@@ -134,11 +134,11 @@ end)
 local tagType, tagColor, tagGradient = getPlayerTag(player)
 
 local screenGui = Instance.new("ScreenGui")
-screenGui.Name = "FreemanHubPremium"
+screenGui.Name = "AuralynxHubPremium"
 screenGui.ResetOnSpawn = false
 screenGui.Parent = getPlayerGui()
 local mainFrame = Instance.new("Frame")
-mainFrame.Name = "FreemanMusicMain"
+mainFrame.Name = "AuralynxMusicMain"
 mainFrame.Size = UDim2.new(0, 370, 0, 470)
 mainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
 mainFrame.Position = UDim2.new(0.5, 0, 0.5, 0)
@@ -169,7 +169,7 @@ icon.Position = UDim2.new(0, 0, 0, 0)
 icon.BackgroundTransparency = 1
 
 local headerTitle = Instance.new("TextLabel", header)
-headerTitle.Text = "Freeman Hub - Premium"
+headerTitle.Text = "Auralynx - Premium"
 headerTitle.Font = Enum.Font.GothamBold
 headerTitle.TextSize = 15
 headerTitle.TextColor3 = tagColor or gold
@@ -545,11 +545,11 @@ grid.FillDirectionMaxCells = 2
 
 -- Notificação animada CLIENT AUDIO (direita -> esquerda)
 local function showClientAudioNotification(musicName, soundObj)
-    if screenGui:FindFirstChild("FreemanNoti") then
-        screenGui.FreemanNoti:Destroy()
+    if screenGui:FindFirstChild("AuralynxNoti") then
+        screenGui.AuralynxNoti:Destroy()
     end
     local noti = Instance.new("Frame", screenGui)
-    noti.Name = "FreemanNoti"
+    noti.Name = "AuralynxNoti"
     noti.Size = UDim2.new(0, 260, 0, 66)
     noti.Position = UDim2.new(1, 280, 1, -130)
     noti.BackgroundColor3 = tagColor or Color3.fromRGB(0,120,255)
